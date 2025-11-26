@@ -52,12 +52,18 @@ export interface ComicImageProps
 }
 
 const ComicImage = React.forwardRef<HTMLImageElement, ComicImageProps>(
-    ({ size, rounded, className, imgSize = 'default', ...props }, ref) => {
-        const safeSize = comicImageSizes[imgSize];
+    ({ size, rounded, className, imgSize = 'default', src, alt, ...props }, ref) => {
+        if (!src) {
+            console.warn('ComicImage missing src prop!');
+        }
+        const key = imgSize in comicImageSizes ? imgSize : 'default';
+        const safeSize = comicImageSizes[key as ComicImageSize];
         const { width, height } = safeSize;
         return (
             <Image
                 ref={ref}
+                src={src!}
+                alt={alt}
                 width={width}
                 height={height}
                 sizes="(max-width: 50px) 2vw, max-width: 1920px) 100px)"
