@@ -3,8 +3,8 @@ import {
     PlayCircle,
     CheckCircle2,
     Clock,
-    Sparkles
-} from "lucide-react";
+    Sparkles, Facebook,
+} from 'lucide-react';
 
 // ** Header
 export const navHeader: TLinkWithIcon[] = [
@@ -32,6 +32,11 @@ export const navHeader: TLinkWithIcon[] = [
         title: 'Truyện mới',
         href: '/danh-sach/truyen-moi.html',
         icon: Sparkles,
+    },
+    {
+        title: 'Fanpage',
+        href: 'https://www.facebook.com/profile.php?id=61582484157563',
+        icon: Facebook,
     },
 ];
 

@@ -132,7 +132,7 @@ const ReadingHistory = () => {
                                             </AlertDialogHeader>
                                             <AlertDialogFooter>
                                                 <AlertDialogCancel asChild>
-                                                    <Button variant='outline'>
+                                                    <Button variant='outline' >
                                                         Thôi, tớ đổi ý rồi~ (ฅ^ω^ฅ)
                                                     </Button>
                                                 </AlertDialogCancel>

@@ -28,6 +28,7 @@ const NavHeader = () => {
                     <li key={nav.href}>
                         <Link
                             href={nav.href}
+                            target={nav.title === 'Fanpage' ? '_blank' : undefined}
                             className={`hover:text-primaryColor ${isActive ? 'text-primaryColor' : ''}`}
                         >
                             {nav.title}

@@ -13,7 +13,7 @@ const buttonVariants = cva(
                     'bg-primaryColor text-primary hover:bg-primaryColor/90',
                 default: '',
                 outline:
-                    'border rounded-[3px] text-secondary text-sm text-left hover:bg-accent hover:text-accent-foreground',
+                    'border rounded-[3px] text-secondary text-sm text-left hover:bg-accent hover:text-accent-foreground dark:bg-bg-accent/50 dark:text-white dark:hover:bg-accent/50',
                 ghost: 'hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50',
                 lightOpacity: 'bg-white/80',
                 darkOpacity: 'bg-black/50',
