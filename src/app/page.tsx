@@ -11,9 +11,9 @@ import DefaultLayout from '@/layouts/DefaultLayout';
 import NavbarGenre from '@/modules/home/NavbarGenre';
 import GridCarouselWrapper from '@/modules/home/GridCarouselWrapper';
 import NewComic from '@/modules/home/NewComic';
-import ComingSoon from '@/modules/home/ComingSoon';
-import PublishingComic from '@/modules/home/PublishingComic';
-import CompleteComic from '@/modules/home/CompleteComic';
+import GenderComicTh from '@/modules/home/GenderComicTh';
+import GenderComicO from '@/modules/home/GenderComicO';
+import GenderComicTw from '@/modules/home/GenderComicTw';
 
 // ** Skeletons
 import GridCarouselSkeleton from '@/skeleton/home/GridCarouselSkeleton';
@@ -57,17 +57,18 @@ const Home = () => {
                     <NewComic />
                 </Suspense>
 
-                <Suspense fallback={<ListComicSkeleton bgColor />}>
-                    <ComingSoon />
-                </Suspense>
-
                 <Suspense fallback={<ListComicSkeleton />}>
-                    <PublishingComic />
+                    <GenderComicO />
                 </Suspense>
 
                 <Suspense fallback={<ListComicSkeleton bgColor />}>
-                    <CompleteComic />
+                    <GenderComicTw />
                 </Suspense>
+
+                <Suspense fallback={<ListComicSkeleton bgColor />}>
+                    <GenderComicTh />
+                </Suspense>
+
             </main>
         </DefaultLayout>
     );

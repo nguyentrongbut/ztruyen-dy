@@ -29,22 +29,19 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="mt-6 flex flex-col gap-1.5 text-xs">
-                        <h3 className="font-semibold md:text-base text-sm">
+                        <h3 className="font-semibold text-white/70 md:text-base">
                             Miễn trừ trách nhiệm
                         </h3>
-                        <p className="mt-0.5">
-                            Trang web này cung cấp nội dung truyện tranh chỉ với
-                            mục đích giải trí và <b> không chịu trách nhiệm </b>{' '}
-                            về bất kỳ nội dung quảng cáo, liên kết của bên thứ
-                            ba hiển thị trên trang web của chúng tôi.
-                        </p>
-                        <p>
-                            Tất cả thông tin và hình ảnh trên website đều được
-                            thu thập từ internet. Chúng tôi không chịu trách
-                            nhiệm về bất kỳ nội dung nào. Nếu bạn hoặc tổ chức
-                            của bạn có vấn đề gì liên quan đến nội dung hiển thị
-                            trên website, vui lòng liên hệ với chúng tôi để được
-                            giải quyết.
+                        <p className="text-sm leading-relaxed">
+                            ZTruyen chỉ cung cấp giao diện và tổng hợp dữ liệu từ
+                            <strong className="mx-1 text-white/70">OTruyen</strong>.
+                            Chúng tôi không lưu trữ hoặc sở hữu nội dung truyện.
+                            Thông tin hiển thị chỉ mang tính tham khảo và
+                            <strong className="mx-1 text-white/70">
+                                không chịu trách nhiệm
+                            </strong>
+                            về độ chính xác, liên kết ngoài hoặc nội dung do bên
+                            thứ ba cung cấp.
                         </p>
                     </div>
                     <p className="mt-5 text-xs md:text-sm font-semibold">

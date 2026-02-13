@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 // ** Next
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
+import Script from 'next/script';
 
 // ** Styles
 import './globals.css';
@@ -63,30 +64,43 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
+    children,
+}: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
-        <body
-            className={`${montserrat.className} antialiased select-none overflow-x-hidden`}
-        >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <NprogressWrapper>
-                <Suspense fallback={null}>
-                    <ScrollToTop />
-                </Suspense>
-                <main className="mt-[56px]">{children}</main>
-                <ToasterCustom />
-            </NprogressWrapper>
-        </ThemeProvider>
-        </body>
+        <html lang="vi" suppressHydrationWarning>
+            <body
+                className={`${montserrat.className} antialiased select-none overflow-x-hidden`}
+            >
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <NprogressWrapper>
+                        <Suspense fallback={null}>
+                            <ScrollToTop />
+                        </Suspense>
+                        <main className="mt-[56px]">{children}</main>
+                        <ToasterCustom />
+                    </NprogressWrapper>
+                </ThemeProvider>
+            </body>
+            <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+                strategy="afterInteractive"
+            />
+
+            <Script id="google-analytics" strategy="afterInteractive">
+                {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+  `}
+            </Script>
         </html>
     );
 }
