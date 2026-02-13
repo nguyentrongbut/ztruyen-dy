@@ -1,4 +1,6 @@
 // Cloudflare Pages build
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 export const runtime = 'edge';
 
 // ** Next
@@ -19,6 +21,7 @@ import removeExtension from '@/utils/removeExtension';
 // ** action service
 import { getChapter } from '@/lib/actions/chapter';
 import { getComicDetail } from '@/lib/actions/detail';
+import React from 'react';
 
 export async function generateMetadata({
     params,
@@ -73,24 +76,74 @@ const ChapterPage = async ({
     const response = await getComicDetail(getChapterName(slug));
     const chapter: IReader = res?.data?.item;
     // slug chapter
-    const slugChapter = response?.data?.item?.slug
-    const thumbImg = response?.data?.item?.thumb_url
+    const slugChapter = response?.data?.item?.slug;
+    const thumbImg = response?.data?.item?.thumb_url;
 
     const listChapter: IChapter[] =
         response?.data?.item?.chapters[0].server_data;
 
+    const indexCurrentChapter = listChapter.findIndex(
+        (chapter) =>
+            getIdFromUrl(chapter.chapter_api_data, '/') ===
+            getIdFromUrl(slug, '-')
+    );
+
+    // Next chapter
+    const nextChapter = listChapter[indexCurrentChapter + 1];
+
+    // Prev chapter
+    const prevChapter = listChapter[indexCurrentChapter - 1];
+
     return (
         <>
             <Header asChild={true}>
-                <h1 className="text-sm line-clamp-1 hidden md:block">
-                    <Link
-                        href={`/truyen-tranh/${response?.data?.item.slug}`}
-                        className="hover:text-primaryColor"
-                    >
-                        {response?.data?.item.name} {' - '}
-                    </Link>
-                    Chương {chapter.chapter_name}
-                </h1>
+                <div className="flex items-center justify-between gap-5">
+                    {prevChapter ? (
+                        <Link
+                            href={`/doc-truyen/${getChapterName(slug)}-chuong-${prevChapter?.chapter_name}-${getIdFromUrl(prevChapter?.chapter_api_data, '/')}.html`}
+                            className="flex items-center gap-1 text-xs hover:text-primaryColor active:text-primaryColor"
+                        >
+                            <ChevronLeft className="size-4" />
+                            <span className="hidden sm:block">
+                                Chương
+                            </span>
+                            <span className='capitalize sm:normal-case'>trước</span>
+                        </Link>
+                    ) : (
+                        <div className="flex items-center gap-1 text-xs opacity-50">
+                            <ChevronLeft className="size-4" />
+                            <span className="hidden sm:block">
+                                Chương
+                            </span>
+                            <span className='capitalize sm:normal-case'>trước</span>
+                        </div>
+                    )}
+                    <h1 className="text-sm line-clamp-1 hidden md:block">
+                        <Link
+                            href={`/truyen-tranh/${response?.data?.item.slug}`}
+                            className="hover:text-primaryColor"
+                        >
+                            {response?.data?.item.name} {' - '}
+                        </Link>
+                        Chương {chapter.chapter_name}
+                    </h1>
+                    {nextChapter ? (
+                        <Link
+                            href={`/doc-truyen/${getChapterName(slug)}-chuong-${nextChapter?.chapter_name}-${getIdFromUrl(nextChapter?.chapter_api_data, '/')}.html`}
+                            className="flex items-center gap-1 text-xs hover:text-primaryColor active:text-primaryColor"
+                        >
+                            <span className="hidden sm:block">Chương</span>
+                            <span className='capitalize sm:normal-case'>sau</span>
+                            <ChevronRight className="size-4" />
+                        </Link>
+                    ) : (
+                        <div className="flex items-center gap-1 text-xs opacity-50">
+                            <span className="hidden sm:block">Chương</span>
+                            <span className='capitalize sm:normal-case'>sau</span>
+                            <ChevronRight className="size-4" />
+                        </div>
+                    )}
+                </div>
             </Header>
             <ImgsChapter
                 numberOfChapters={res?.data?.item?.chapter_name}
