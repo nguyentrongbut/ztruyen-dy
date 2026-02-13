@@ -176,7 +176,7 @@ const Carousel = ({
                                             size="lgResponsive"
                                         />
                                         <div
-                                            className="text-[10px] sm:text-xs md:text-sm line-clamp-1"
+                                            className="text-[10px] sm:text-xs md:text-sm truncate"
                                             title={`Cập nhật ${formatRelativeTime(item.updatedAt)}`}
                                         >
                                             Cập nhật
