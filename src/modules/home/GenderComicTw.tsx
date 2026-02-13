@@ -10,7 +10,7 @@ const GenderComicTw = async () => {
     return (
         <Carousel
             data={data}
-            title="Một Góc Nhỏ Cho Người Mộng Mơ"
+            title="Ngôn Tình Mộng Mơ"
             bgColor
             href="the-loai/ngon-tinh.html"
         ></Carousel>

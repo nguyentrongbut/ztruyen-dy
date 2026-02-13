@@ -50,6 +50,9 @@ const Header = ({
                     <div className="hidden xl:block">
                         <ModeToggle/>
                     </div>
+                    <div className="hidden xl:block">
+                        <Button variant='primary' className='text-xs'  disabled>Beta v1.1</Button>
+                    </div>
                     <div className="xl:hidden">
                         <Sheet>
                             <SheetTrigger asChild className="cursor-pointer">
@@ -72,6 +75,13 @@ const Header = ({
                                         </li>
                                     </SheetTitle>
                                     <NavHeaderMobile />
+                                    <SheetTitle asChild>
+                                        <li className="rounded-md flex justify-center mt-5">
+                                            <SheetClose asChild>
+                                                <Button variant='primary' className='text-xs w-full'  disabled>Beta v1.1</Button>
+                                            </SheetClose>
+                                        </li>
+                                    </SheetTitle>
                                 </ul>
                             </SheetContent>
                         </Sheet>
