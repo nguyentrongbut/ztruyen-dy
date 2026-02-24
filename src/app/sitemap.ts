@@ -1,25 +1,36 @@
-//  ** action services
-import { getGenres } from '@/lib/actions/dynamic.page';
-import { getListNew } from '@/lib/actions/home';
+//  ** services
+import { getListGenre } from '@/services/categories';
+
+// ** Config
+import { CONFIG_SLUG } from '@/configs/slug';
+
+// ** Enum
+import { ESlug } from '@/types/enum';
+import { getListByStatus } from '@/services/list';
 
 export default async function sitemap() {
     const baseURL = process.env.NEXT_PUBLIC_YOUR_WEBSITE;
-    const resGenres = await getGenres();
-    const dataGenres: IGenres[] = resGenres?.data?.items;
-    const dataHome: IComic[] = await getListNew();
-    const dataGenreUrls = dataGenres.map((genre) => ({
-        url: `${baseURL}/the-loai/${genre.slug}.html`,
+    const resGenres = await getListGenre();
+    const resHome = await getListByStatus(ESlug.NEW);
+    const dataHome = resHome.data?.items
+    const dataGenres = resGenres.data?.items
+    const dataGenreUrls = dataGenres?.map((genre) => ({
+        url: `${baseURL}/${CONFIG_SLUG.GENRE}/${genre.slug}.html`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.8,
     }));
 
-    const dataHomeUrls = dataHome.map((comic) => ({
-        url: `${baseURL}/truyen-tranh/${comic.slug}`,
+    const dataHomeUrls = dataHome?.map((comic) => ({
+        url: `${baseURL}/${CONFIG_SLUG.DETAIL}/${comic.slug}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.9,
     }));
+
+
+    console.log(dataGenreUrls);
+    console.log(dataHomeUrls);
     return [
         {
             url: baseURL,
@@ -28,31 +39,31 @@ export default async function sitemap() {
             priority: 1.0,
         },
         {
-            url: `${baseURL}/truyen-tranh/`,
+            url: `${baseURL}/${CONFIG_SLUG.DETAIL}/`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.9,
         },
         {
-            url: `${baseURL}/doc-truyen/`,
+            url: `${baseURL}/${CONFIG_SLUG.READING}/`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.9,
         },
         {
-            url: `${baseURL}/danh-sach/dang-phat-hanh`,
+            url: `${baseURL}/${CONFIG_SLUG.LIST}/${ESlug.ONGOING}`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.7,
         },
         {
-            url: `${baseURL}/danh-sach/hoan-thanh`,
+            url: `${baseURL}/${CONFIG_SLUG.LIST}/${ESlug.COMPLETED}`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.7,
         },
         {
-            url: `${baseURL}/danh-sach/sap-ra-mat`,
+            url: `${baseURL}/${CONFIG_SLUG.LIST}/${ESlug.COMING_SOON}`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.7,
@@ -64,12 +75,12 @@ export default async function sitemap() {
             priority: 0.3,
         },
         {
-            url: `${baseURL}/tat-ca.html`,
+            url: `${baseURL}/${CONFIG_SLUG.GENRE}/tat-ca.html`,
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 0.8,
         },
-        ...dataGenreUrls,
-        ...dataHomeUrls,
+        ...(dataGenreUrls ?? []),
+        ...(dataHomeUrls ?? [])
     ];
 }
