@@ -1,3 +1,6 @@
+// Cloudflare Pages build
+export const runtime = 'edge';
+
 // ** Next
 import Link from "next/link";
 
