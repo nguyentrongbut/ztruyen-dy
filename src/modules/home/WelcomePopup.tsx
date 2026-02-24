@@ -84,10 +84,11 @@ const WelcomePopup = () => {
                        </p>
 
                        <Link
-                           href="https://www.facebook.com/p/Ztruyen-io-vn-61582484157563"
+                           href="https://www.facebook.com/share/p/16yfVnLQ7C/"
                            target="_blank"
                            rel="noopener noreferrer"
                            className="flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-2.5 px-4 rounded-xl transition-colors"
+                           onClick={handleClose}
                        >
                            👉 Bài post góp ý cải thiện giao diện
                        </Link>
