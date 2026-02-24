@@ -1,17 +1,28 @@
-import Carousel from '@/modules/home/carousel';
-import { getGenreDetail } from '@/lib/actions/dynamic.page';
+// ** Components
+import ErrorText from "@/components/common/ErrorText";
+
+// ** Module component
+import Carousel from "@/modules/home/Carousel";
+
+// ** Services
+import { getListByGender } from '@/services/categories';
 
 const GenderComicTh = async () => {
-    const res = await getGenreDetail('manhwa');
 
-    const data = res?.data.items;
+    const res = await getListByGender('manhua')
+
+    const data = res.data?.items
+
+    if(!data) return <ErrorText/>;
+
     return (
         <Carousel
             data={data}
-            title="Góc Manhwa Lãng Mạn"
-            href="the-loai/manhwa.html"
-        ></Carousel>
-    );
-};
+            desc='Khám phá truyện Trung hay (≧ω≦)'
+            title="Thế giới Manhua"
+            bgColor
+        />
+    )
+}
 
-export default GenderComicTh;
+export default GenderComicTh

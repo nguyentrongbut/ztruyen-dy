@@ -8,18 +8,19 @@ import type { Metadata } from 'next';
 import DefaultLayout from '@/layouts/DefaultLayout';
 
 // ** Modules
+import GridCarousel from '@/modules/home/GridCarousel';
 import NavbarGenre from '@/modules/home/NavbarGenre';
-import GridCarouselWrapper from '@/modules/home/GridCarouselWrapper';
-import NewComic from '@/modules/home/NewComic';
-import GenderComicTh from '@/modules/home/GenderComicTh';
 import GenderComicO from '@/modules/home/GenderComicO';
 import GenderComicTw from '@/modules/home/GenderComicTw';
+import GenderComicTh from '@/modules/home/GenderComicTh';
+import RecommendedComic from '@/modules/home/RecommendedComic';
 
 // ** Skeletons
 import GridCarouselSkeleton from '@/skeleton/home/GridCarouselSkeleton';
 import NavbarGenreSkeleton from '@/skeleton/home/NavbarGenreSkeleton';
 import ListComicSkeleton from '@/skeleton/home/ListComicSkeleton';
-import NewComicSkeleton from '@/skeleton/home/NewComicSkeleton';
+import RecommendedComicSkeleton from '@/skeleton/home/RecommendedComicSkeleton';
+
 
 export const metadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_YOUR_WEBSITE || ''),
@@ -46,18 +47,18 @@ const Home = () => {
         <DefaultLayout>
             <main>
                 <Suspense fallback={<GridCarouselSkeleton />}>
-                    <GridCarouselWrapper />
+                    <GridCarousel />
                 </Suspense>
 
                 <Suspense fallback={<NavbarGenreSkeleton />}>
                     <NavbarGenre />
                 </Suspense>
 
-                <Suspense fallback={<NewComicSkeleton />}>
-                    <NewComic />
+                <Suspense fallback={<RecommendedComicSkeleton/>}>
+                    <RecommendedComic/>
                 </Suspense>
 
-                <Suspense fallback={<ListComicSkeleton />}>
+                <Suspense fallback={<ListComicSkeleton bgColor/>}>
                     <GenderComicO />
                 </Suspense>
 

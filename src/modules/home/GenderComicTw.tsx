@@ -1,19 +1,26 @@
-import Carousel from '@/modules/home/carousel';
-import { getGenreDetail } from '@/lib/actions/dynamic.page';
+// ** Components
+import ErrorText from "@/components/common/ErrorText";
+
+// ** Module component
+import Carousel from "@/modules/home/Carousel";
+
+// ** Services
+import { getListByGender } from '@/services/categories';
 
 const GenderComicTw = async () => {
 
-    const res = await getGenreDetail('ngon-tinh')
+    const res = await getListByGender('manga')
 
-    const data = res?.data.items;
+    const data = res.data?.items
+
+    if(!data) return <ErrorText/>;
 
     return (
         <Carousel
             data={data}
-            title="Ngôn Tình Mộng Mơ"
-            bgColor
-            href="the-loai/ngon-tinh.html"
-        ></Carousel>
+            desc='Truyện tranh Nhật đặc sắc ヾ(≧▽≦*)o'
+            title="Kho Manga hay"
+        />
     )
 }
 

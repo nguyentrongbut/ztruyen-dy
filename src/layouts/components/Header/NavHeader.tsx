@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 import removeExtension from '@/utils/removeExtension';
 
 // ** Configs
-import { navHeader } from '@/configs/layout';
+import {navHeader} from "@/configs/header";
 
 const NavHeader = () => {
     const path = usePathname();
@@ -18,18 +18,19 @@ const NavHeader = () => {
     return (
         <ul className="hidden xl:flex items-center gap-[25px]">
             {navHeader.map((nav) => {
-                const isActive =
-                    pathGenre && nav.title === 'Thể loại'
-                        ? true
-                        : removeExtension(path, '.html') ===
-                          removeExtension(nav.href, '.html');
+
+                const isGenre = pathGenre && nav.title === 'Thể loại'
+                const isFanpage = nav.title === 'Fanpage'
+                const isSamePath = removeExtension(path, '.html') === removeExtension(nav.href, '.html');
+
+                const isActive = isGenre ? true : isSamePath;
 
                 return (
                     <li key={nav.href}>
                         <Link
                             href={nav.href}
-                            target={nav.title === 'Fanpage' ? '_blank' : undefined}
-                            className={`hover:text-primaryColor ${isActive ? 'text-primaryColor' : ''}`}
+                            target={isFanpage ? '_blank' : undefined}
+                            className={`hover:text-primary ${isActive ? 'text-primary' : ''}`}
                         >
                             {nav.title}
                         </Link>

@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 
 // ** Next
 import type { Metadata } from 'next';
-import { Montserrat } from 'next/font/google';
+import { Bangers, Montserrat, Nunito } from 'next/font/google';
 import Script from 'next/script';
 
 // ** Styles
@@ -14,10 +14,33 @@ import { ThemeProvider } from '@/theme/ThemeProvider';
 import NprogressWrapper from '@/components/common/nprogress.wrapper';
 import ToasterCustom from '@/components/common/ToasterCustom';
 import ScrollToTop from '@/components/common/ScrollToTop';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
+// ** Module component
+import WelcomePopup from '@/modules/home/WelcomePopup';
+
+// UI / Button / Filter
 const montserrat = Montserrat({
     subsets: ['latin'],
-    weight: ['300', '400', '500', '600', '700'],
+    weight: ['400', '500', '600', '700'],
+    variable: '--font-ui',
+    display: 'swap',
+});
+
+// Title comic/ chapter
+const bangers = Bangers({
+    subsets: ['latin'],
+    weight: '400',
+    variable: '--font-title',
+    display: 'swap',
+});
+
+// Description / text comic
+const nunito = Nunito({
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'],
+    variable: '--font-text',
+    display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -71,7 +94,7 @@ export default function RootLayout({
     return (
         <html lang="vi" suppressHydrationWarning>
             <body
-                className={`${montserrat.className} antialiased select-none overflow-x-hidden`}
+                className={`${montserrat.variable} ${bangers.variable} ${nunito.variable}`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -83,7 +106,10 @@ export default function RootLayout({
                         <Suspense fallback={null}>
                             <ScrollToTop />
                         </Suspense>
-                        <main className="mt-[56px]">{children}</main>
+                        <TooltipProvider>
+                            {children}
+                            <WelcomePopup/>
+                        </TooltipProvider>
                         <ToasterCustom />
                     </NprogressWrapper>
                 </ThemeProvider>

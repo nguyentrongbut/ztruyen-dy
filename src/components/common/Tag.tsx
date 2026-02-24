@@ -1,5 +1,5 @@
 // ** React
-import * as React from 'react';
+import {HTMLAttributes} from "react";
 
 // ** Next
 import Link from 'next/link';
@@ -11,7 +11,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const tagVariants = cva(
-    'rounded-sm text-xs h-[20px] py-[1px] px-1.5 flex-shrink-0 text-white',
+    'rounded-sm text-xs h-[20px] py-[1px] px-1.5 flex-shrink-0 text-white font-ui',
     {
         variants: {
             theme: {
@@ -27,16 +27,15 @@ const tagVariants = cva(
 );
 
 export interface TagProps
-    extends React.HTMLAttributes<HTMLLIElement>,
+    extends HTMLAttributes<HTMLLIElement>,
         VariantProps<typeof tagVariants> {
     href: string;
 }
 
-const Tag = React.forwardRef<HTMLLIElement, TagProps>(
-    ({ children, href, className, theme, ...props }, ref) => {
+const Tag = (
+    ({ children, href, className, theme, ...props }: TagProps) => {
         return (
             <li
-                ref={ref}
                 className={cn(tagVariants({ theme, className }))}
                 {...props}
             >
@@ -46,6 +45,4 @@ const Tag = React.forwardRef<HTMLLIElement, TagProps>(
     }
 );
 
-Tag.displayName = 'Tag';
-
-export { Tag, tagVariants };
+export default Tag;

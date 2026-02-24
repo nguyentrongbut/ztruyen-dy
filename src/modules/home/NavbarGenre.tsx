@@ -1,13 +1,23 @@
+// ** Next
 import Link from 'next/link';
-import { getListGenre } from '@/lib/actions/home';
+
+// ** Component
+import ErrorText from "@/components/common/ErrorText";
+
+// ** Service
+import { getListGenre } from '@/services/categories';
 
 const NavbarGenre = async () => {
 
-    const listGenre: IGenres[] = await getListGenre();
+    const res = await getListGenre();
+
+    const listGenre = res.data?.items;
+
+    if (!listGenre) return <ErrorText/>;
 
     return (
-        <nav className="flex justify-center py-3.5 sm:py-[26px] bg-secondary text-primary dark:bg-black dark:text-primary">
-            <ul className="flex sm:gap-7 gap-5 text-xs lg:text-[15px] container justify-center wrapper">
+        <nav className="flex justify-center py-3.5 sm:py-5 bg-black/90 text-white font-ui">
+            <ul className="flex sm:gap-7 gap-5 text-xs lg:text-sm container justify-center">
                 {listGenre.slice(0, 8).map((item, index) => (
                     <li
                         key={index}
@@ -15,8 +25,8 @@ const NavbarGenre = async () => {
                             index + 1 === 7 || index + 1 === 8
                                 ? 'hidden lg:block'
                                 : index + 1 === 5 || index + 1 === 6
-                                  ? 'hidden sm:block'
-                                  : 'block'
+                                    ? 'hidden sm:block'
+                                    : 'block'
                         }`}
                     >
                         <Link href={`/the-loai/${item.slug}.html`}>

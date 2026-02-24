@@ -11,7 +11,8 @@ import { SheetClose, SheetTitle } from '@/components/ui/sheet';
 import removeExtension from '@/utils/removeExtension';
 
 // ** Configs
-import { navHeader } from '@/configs/layout';
+import { navHeader } from '@/configs/header';
+import Button from '@/components/common/Button';
 
 const NavHeaderMobile = () => {
     const path = usePathname();
@@ -35,9 +36,13 @@ const NavHeaderMobile = () => {
                             <SheetClose asChild>
                                 <Link
                                     href={nav.href}
-                                    target={nav.title === 'Fanpage' ? '_blank' : undefined}
-                                    className={`hover:text-primaryColor py-2 pl-3 flex items-center gap-2
-                                    ${isActive ? 'text-primaryColor' : ''}
+                                    target={
+                                        nav.title === 'Fanpage'
+                                            ? '_blank'
+                                            : undefined
+                                    }
+                                    className={`hover:text-primary py-2 pl-3 flex items-center gap-2
+                                    ${isActive ? 'text-primary' : ''}
                                     `}
                                 >
                                     {Icon && <Icon className="size-4" />}
@@ -48,6 +53,10 @@ const NavHeaderMobile = () => {
                     </SheetTitle>
                 );
             })}
+
+            <Button sizeCustom="xs" disabled className='mt-3'>
+                Beta v1.1
+            </Button>
         </>
     );
 };

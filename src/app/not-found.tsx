@@ -1,10 +1,13 @@
 // ** Next
-import Link from 'next/link';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import Image from 'next/image';
 
 // ** Shadcn ui
-import { Button } from '@/components/ui/button';
+import Button from "@/components/common/Button";
+
+// ** Config
+import {CONFIG_IMAGE} from "@/configs/image";
 
 export const metadata: Metadata = {
     title: '404 - Không tìm thấy trang này',
@@ -13,23 +16,24 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
     return (
-        <div className="flex flex-col gap-4 sm:gap-6 justify-center items-center h-screen -mt-[56px]">
+        <div className="flex flex-col gap-4 sm:gap-6 justify-center items-center h-screen">
             <Image
                 src="/notfound.png"
                 width={192}
                 height={192}
                 alt="404 - Ztruyện | ztruyen.io.vn"
+                placeholder={CONFIG_IMAGE.BLUR_DATA_URL as 'data:image/'}
                 className="hover:scale-105 transition-transform"
             />
-            <h1 className="sm:text-xl font-bold mt-4">
+            <h1 className="text-lg sm:text-2xl mt-4 font-title tracking-wide">
                 (つ≧▽≦)つ Hình như bạn đi lạc mất rồi ⊂(・▽・⊂)
             </h1>
-            <p className="text-xs sm:text-sm">
+            <p className="text-xs sm:text-sm text-center">
                 Đường dẫn này không tồn tại, hãy quay lại để tiếp tục hành trình
                 nhé.
             </p>
-            <Link href='/'className="mt-1 sm:mt-2">
-                <Button variant="primary" className="text-xs">
+            <Link href='/' className="mt-1 sm:mt-2">
+                <Button className="text-xs">
                     Về nhà thôi nào (≧▽≦)
                 </Button>
             </Link>

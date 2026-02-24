@@ -1,0 +1,67 @@
+// ** React
+import {ComponentProps} from "react";
+
+// ** Components
+import { Button as ShadcnButton } from '@/components/ui/button'
+
+// ** lib
+import {cn} from "@/lib/utils";
+
+// ** cva
+import {cva, VariantProps} from "class-variance-authority";
+
+const buttonVariants = cva(
+    "cursor-pointer font-ui dark:text-white",
+    {
+        variants: {
+            shape: {
+                normal: "rounded-md",
+                pill: "rounded-full",
+                verticalRectangle: 'w-8 h-20 rounded-none',
+                circle: 'size-12 sm:size-[60px] md:size-[64px] lg:size-[74px] rounded-full',
+            },
+            width: {
+                auto: "",
+                full: "w-full",
+            },
+            sizeCustom: {
+                xs: "px-4 py-2 text-xs",
+                sm: "px-5 py-2.5 text-sm",
+            },
+        },
+        defaultVariants: {
+            shape: "normal",
+            width: "auto",
+            sizeCustom: "sm",
+        },
+    }
+)
+
+interface ButtonProps
+    extends ComponentProps<typeof ShadcnButton>,
+        VariantProps<typeof buttonVariants> {
+    isLoading?: boolean
+}
+
+const Button = ({
+                    shape,
+                    width,
+                    sizeCustom,
+                    isLoading,
+                    className,
+                    children,
+                    disabled,
+                    ...props
+                }: ButtonProps) => {
+    return (
+        <ShadcnButton
+            className={cn(buttonVariants({ shape, width, sizeCustom }), className)}
+            disabled={isLoading || disabled}
+            {...props}
+        >
+            {isLoading ? "Đợi xíu nhe~" : children}
+        </ShadcnButton>
+    )
+}
+
+export default Button

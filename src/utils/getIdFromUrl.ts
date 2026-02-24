@@ -1,13 +1,8 @@
-const getIdFromUrl = (url: string, type: string) => {
-    let parts: string[] = [];
+type TGetIdFromUrl = '/' | '-'
 
-    if (type === '/') {
-        parts = url.split('/');
-    } else if (type === '-') {
-        parts = url.split('-');
-    }
-
-    return parts[parts.length - 1];
+const getIdFromUrl = (url: string, type: TGetIdFromUrl) => {
+    const parts = url.split(type).filter(Boolean);
+    return parts[parts.length - 1] || '';
 };
 
 export default getIdFromUrl;

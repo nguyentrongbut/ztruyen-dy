@@ -1,5 +1,5 @@
 // ** React
-import * as React from 'react';
+import {HTMLAttributes} from "react";
 
 // ** Next
 import Link from 'next/link';
@@ -12,7 +12,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const logoVariants = cva(
-    'font-bold first-letter:uppercase first-letter:text-primaryColor',
+    'font-bold first-letter:uppercase first-letter:text-primary font-ui',
     {
         variants: {
             size: {
@@ -34,11 +34,11 @@ const logoSizes: Record<'default' | 'lg', { width: number; height: number }> = {
 const websiteName = 'ztruyện';
 
 export interface LogoProps
-    extends React.HTMLAttributes<HTMLParagraphElement>,
+    extends HTMLAttributes<HTMLParagraphElement>,
         VariantProps<typeof logoVariants> {}
 
-const Logo = React.forwardRef<HTMLParagraphElement, LogoProps>(
-    ({ className, size = 'default', ...props }, ref) => {
+const Logo = (
+    ({ className, size = 'default', ...props }: LogoProps) => {
         const safeSize = (size ?? 'default') as 'default' | 'lg';
         const { width, height } = logoSizes[safeSize];
         return (
@@ -51,7 +51,6 @@ const Logo = React.forwardRef<HTMLParagraphElement, LogoProps>(
                     priority
                 />
                 <p
-                    ref={ref}
                     className={cn(logoVariants({ size }), className)}
                     {...props}
                 >
@@ -61,7 +60,5 @@ const Logo = React.forwardRef<HTMLParagraphElement, LogoProps>(
         );
     }
 );
-
-Logo.displayName = 'Logo';
 
 export default Logo;
