@@ -41,7 +41,7 @@ const WelcomePopup = () => {
                    {/* Close button */}
                    <Button
                        onClick={handleClose}
-                       className="absolute top-4 right-4 size-8 rounded-full hover:bg-primary hover:text-white transition-colors"
+                       className="absolute top-4 right-4 size-8 rounded-full hover:bg-primary hover:text-white transition-colors dark:bg-primary dark:hover:text-destructive"
                        variant="ghost"
                    >
                        <X className="size-4" />
@@ -49,7 +49,7 @@ const WelcomePopup = () => {
 
                    {/* Header */}
                    <div className="section-header justify-center">
-                       <h2 className="heading">Thông báo!</h2>
+                       <h2 className="heading text-primary">Thông báo!</h2>
                    </div>
 
                    {/* Content */}
