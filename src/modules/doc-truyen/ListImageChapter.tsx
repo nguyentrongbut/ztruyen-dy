@@ -45,8 +45,6 @@ type TListImageChapter = {
     listDetailComic: IOtruyenDetailComic
 }
 
-let showGuide = false
-
 const ListImageChapter = ({
                               listImageChapter, nextChapter, prevChapter,
                               chapters, currentChapterId, path, listDetailComic,
@@ -63,15 +61,19 @@ const ListImageChapter = ({
     const [isOverlayOpen, setIsOverlayOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [showGuide, setShowGuide] = useState(false);
 
     // Ref
     const imgRefs = useRef<(HTMLImageElement | null)[]>([]);
 
     // Toast Guide mobile
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+
         const hasSeenGuide = localStorage.getItem('ZTC-hasSeenGuide');
+
         if (!hasSeenGuide) {
-            showGuide = true;
+            setShowGuide(true);
             localStorage.setItem('ZTC-hasSeenGuide', 'true');
         }
     }, []);
@@ -223,7 +225,7 @@ const ListImageChapter = ({
                         className="z-50 bg-primary text-white
                  text-xs sm:text-sm w-fit text-center
                  px-4 py-2 rounded-md shadow-lg
-                 animate-fadeInOut"
+                 animate-fade-in-out"
                     >
                         Nhấp vào ảnh để hiển thị thanh công cụ nhé ~ (≧▽≦)
                     </div>

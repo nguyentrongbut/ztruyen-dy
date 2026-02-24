@@ -17,7 +17,7 @@ import ScrollToTop from '@/components/common/ScrollToTop';
 import { TooltipProvider } from '@/components/ui/tooltip';
 
 // ** Module component
-// import WelcomePopup from '@/modules/home/WelcomePopup';
+import WelcomePopup from '@/modules/home/WelcomePopup';
 
 // UI / Button / Filter
 const montserrat = Montserrat({
@@ -108,7 +108,7 @@ export default function RootLayout({
                         </Suspense>
                         <TooltipProvider>
                             {children}
-                            {/*<WelcomePopup/>*/}
+                            <WelcomePopup/>
                         </TooltipProvider>
                         <ToasterCustom />
                     </NprogressWrapper>
