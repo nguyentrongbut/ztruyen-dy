@@ -36,12 +36,12 @@ const WelcomePopup = () => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl p-6 max-w-md w-full mx-4 relative shadow-xl ">
+            <div className="bg-background rounded-2xl p-6 max-w-md w-full mx-4 relative shadow-xl ">
                <div className='overflow-y-auto custom-scroll max-h-screen -mr-2 sm:mr-0'>
                    {/* Close button */}
                    <Button
                        onClick={handleClose}
-                       className="absolute top-4 right-4 size-8 rounded-full hover:bg-primary hover:text-white transition-colors dark:bg-primary dark:hover:text-destructive"
+                       className="absolute top-4 right-4 size-8 rounded-full hover:bg-primary hover:text-white transition-colors  dark:hover:bg-primary dark:hover:text-white"
                        variant="ghost"
                    >
                        <X className="size-4" />
@@ -53,7 +53,7 @@ const WelcomePopup = () => {
                    </div>
 
                    {/* Content */}
-                   <div className="text-sm text-gray-600 space-y-3">
+                   <div className="text-sm space-y-3">
                        <p>
                            Chào các đọc giả yêu truyện của{' '}
                            <span className="font-semibold text-primary">
@@ -67,7 +67,7 @@ const WelcomePopup = () => {
                            đang được làm với các tính năng:
                        </p>
 
-                       <ul className="bg-gray-50 rounded-xl p-3 space-y-2">
+                       <ul className="rounded-xl p-3 space-y-2">
                            <li className="flex items-center gap-2">
                                🔐 Đăng nhập / Đăng ký
                            </li>
