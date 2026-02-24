@@ -15,6 +15,9 @@ import { TOtruyenChapter } from '@/types/api';
 // ** Util
 import {buildReadingUrl} from "@/utils/buildReadingUrl ";
 
+// ** LocalStorage
+import { historyService } from '@/utils/localStorage/historyService';
+
 type TReadingBtnProps = {
     chapter: TOtruyenChapter;
     slug: string;
@@ -22,7 +25,7 @@ type TReadingBtnProps = {
 
 const ReadingBtn = ({chapter, slug}: TReadingBtnProps) => {
 
-    const isComicHistory = false
+    const isComicHistory = historyService.getBySlug(slug);
     const hrefFirstChapter = buildReadingUrl(slug, chapter.chapter_name, chapter.chapter_api_data)
 
     if (!isComicHistory)
@@ -36,9 +39,9 @@ const ReadingBtn = ({chapter, slug}: TReadingBtnProps) => {
         );
 
     return (
-        <Link href={`/`} className=' w-full'>
+        <Link href={isComicHistory.path} className=' w-full'>
             <Button sizeCustom='xs' width='full'>
-                Đọc tiếp chương 3 thôi nào ~~ (=^･ｪ･^=)
+                Đọc tiếp chương {isComicHistory.chapter} thôi nào ~~ (=^･ｪ･^=)
             </Button>
         </Link>
     )
