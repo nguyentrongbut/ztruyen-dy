@@ -161,7 +161,7 @@ const OverlaySettings = ({
                 {/* Detail comic btn*/}
                 {!isMd && (
                     <Link
-                        href={`/${CONFIG_SLUG.DETAIL}/${slugComic}.html`}
+                        href={`/${CONFIG_SLUG.DETAIL}/${slugComic}`}
                         className="flex flex-col items-center gap-1 p-2 cursor-pointer text-setting"
                     >
                         <BookOpenText className="size-5"/>
