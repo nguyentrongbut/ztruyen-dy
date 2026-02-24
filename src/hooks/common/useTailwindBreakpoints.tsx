@@ -1,8 +1,23 @@
 'use client';
 
+// ** React
 import { useState, useEffect } from 'react';
 
-const useTailwindBreakpoints = (): Breakpoints => {
+type TBreakpoints = {
+    windowWidth: number;
+    /** screen ≥ 640px (sm) */
+    isSm: boolean;
+    /** screen ≥ 768px (md) */
+    isMd: boolean;
+    /** screen ≥ 1024px (lg) */
+    isLg: boolean;
+    /** screen ≥ 1280px (xl) */
+    isXl: boolean;
+    /** screen ≥ 1536px (2xl) */
+    is2xl: boolean;
+}
+
+const useTailwindBreakpoints = (): TBreakpoints => {
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const [hasMounted, setHasMounted] = useState(false);
 
@@ -14,7 +29,6 @@ const useTailwindBreakpoints = (): Breakpoints => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Nếu chưa mount, có thể trả về các giá trị mặc định để không gây sai lệch khi SSR
     if (!hasMounted) {
         return {
             windowWidth: 0,

@@ -1,5 +1,5 @@
 // ** Type
-
+import { TStatus } from '@/types/api';
 
 export const convertStatusToVi = (status: TStatus) => {
     switch (status) {
