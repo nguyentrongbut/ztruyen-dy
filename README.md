@@ -56,17 +56,17 @@ src
 │   └── ui                     # Shadcn UI components (shared UI elements)
 │
 ├── configs
-│   ├── api.ts                 # API endpoint configuration
+│   ├── api.d.ts                 # API endpoint configuration
 │   └── layout.tsx             # Layout configuration (header, footer, etc.)
 │
 ├── hooks                      # Custom React hooks
 │
-├── layouts                    # Global layouts (DefaultLayout, Header, Footer, etc.)
+├── layouts                    # Global layouts (DefaultLayout, Index, Footer, etc.)
 │   ├── DefaultLayout.tsx
 │   └── components
 │       ├── Footer.tsx
-│       ├── Header
-│       │   ├── Header.tsx
+│       ├── Index
+│       │   ├── index.tsx
 │       │   ├── NavHeader.tsx
 │       │   └── NavHeaderMobile.tsx
 │       └── Search.tsx

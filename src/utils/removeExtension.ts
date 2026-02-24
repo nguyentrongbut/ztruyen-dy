@@ -1,4 +1,6 @@
-function removeExtension(str: string, extension: string) {
+const removeExtension = (str: string, extension: string)=>  {
+    if (!extension) return str;
+
     if (str.endsWith(extension)) {
         return str.slice(0, -extension.length);
     }

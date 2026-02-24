@@ -8,15 +8,15 @@ import Link from 'next/link';
 
 // ** Components
 import ComicImage from '@/components/common/ComicImage';
-import { Heading } from '@/components/typography/Heading';
 
 // ** Modules
 import EmptyPage from '@/modules/lich-su/EmptyPage';
 
 // ** Shadcn ui
-import { Button } from '@/components/ui/button';
-// import { PaginationWithLinks } from '@/components/ui/pagination-with-links';
+import Button from '@/components/common/Button';
+
 import { Checkbox } from '@/components/ui/checkbox';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -39,17 +39,24 @@ import toast from 'react-hot-toast';
 import { historyService } from '@/utils/localStorage/historyService';
 
 // ** configs
-import { CONFIG_API_OUT_SIDE } from '@/configs/api';
+import { CONFIG_API_OTRUYEN } from '@/configs/api';
+import { CONFIG_SLUG } from '@/configs/slug';
+
+// ** Skeleton
+import ListComicByStatusSkeleton from '@/skeleton/common/ListComicByStatusSkeleton';
 
 const ReadingHistory = () => {
 
+    // ** States
     const [deleteAll, setDeleteAll] = useState(false);
     const [selected, setSelected] = useState<string[]>([]);
     const [listHistory, setListHistory] = useState<IHistory[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Load history khi mount
     useEffect(() => {
         setListHistory(historyService.getAll());
+        setIsLoading(false);
     }, []);
 
     const refreshHistory = () => {
@@ -95,65 +102,64 @@ const ReadingHistory = () => {
         }
     };
 
-    return (
-        <section className="min-h-[54vh] wrapper pt-6 pb-20">
-            <div className="mb-6 flex flex-col md:flex-row gap-4 justify-between md:items-center">
-                <Heading
-                    link={false}
-                    title="Lịch sử đọc truyện"
-                    size="xl"
-                    type="capitalize"
-                />
+    if (isLoading) return <ListComicByStatusSkeleton/>
 
+    return (
+        <section className="min-h-[54vh] container pt-2 pb-20">
+            <div className="flex flex-col lg:flex-row justify-between lg:items-baseline">
+                <div className='section-header gap-2.5 sm:gap-4 flex-col md:flex-row py-5'>
+                    <h1 className='heading py-0'>Lịch sử đọc truyện</h1>
+                    <p className='desc'>Xem lại những bộ truyện bạn đã đọc (ง •̀_•́)ง</p>
+                </div>
+
+                {/*  Btns  */}
                 {listHistory.length > 1 && (
                     <div className="flex gap-4 md:gap-2 items-center">
                         {
                             isHistory &&
-                                // ** Btn Action delete all
-                                (deleteAll ? (
-                                    <AlertDialog>
-                                        <AlertDialogTrigger asChild>
-                                            <Button
-                                                shape="rectangleSmall"
-                                                className="text-red-600 dark:text-red-400 hover:opacity-90"
-                                            >
-                                                <Trash className="size-3 sm:size-4" />
-                                                Xác nhận xoá
-                                            </Button>
-                                        </AlertDialogTrigger>
-                                        <AlertDialogContent>
-                                            <AlertDialogHeader>
-                                                <AlertDialogTitle>
-                                                    Ôi không! Bạn muốn tiễn tất cả những truyện này lên thiên đường truyện tranh! (=^･ω･^=)
-                                                </AlertDialogTitle>
-                                                <AlertDialogDescription>
-                                                    Hành động này sẽ xoá chúng vĩnh viễn, nhưng ký ức về chúng vẫn còn trong tim bạn! (≧ᆺ≦)
-                                                </AlertDialogDescription>
-                                            </AlertDialogHeader>
-                                            <AlertDialogFooter>
-                                                <AlertDialogCancel asChild>
-                                                    <Button variant='outline' >
-                                                        Thôi, tớ đổi ý rồi~ (ฅ^ω^ฅ)
-                                                    </Button>
-                                                </AlertDialogCancel>
-                                                <AlertDialogAction asChild>
-                                                    <Button onClick={handleDeleteMultiple} variant='danger'>
-                                                        Đúng vậy! (=^･ｪ･^=)/
-                                                    </Button>
-                                                </AlertDialogAction>
-                                            </AlertDialogFooter>
-                                        </AlertDialogContent>
-                                    </AlertDialog>
-                                ) : (
-                                    <Button
-                                        shape="rectangleSmall"
-                                        className="text-red-600 dark:text-red-400 hover:opacity-90"
-                                        onClick={() => setDeleteAll(true)}
-                                    >
-                                        <Trash className="size-3 sm:size-4" />
-                                        Xoá nhiều truyện
-                                    </Button>
-                                ))
+                            // ** Btn Action delete all
+                            (deleteAll ? (
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button
+                                            sizeCustom='xs'
+                                            variant='ghost'
+                                            className="text-red-600 dark:text-red-400 hover:text-red-600"
+                                        >
+                                            <Trash className="size-3 sm:size-4"/>
+                                            Xác nhận xoá
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>
+                                                Meoow… Bạn chắc chắn muốn xóa hết đống truyện chưa đọc hết này hả? (=^･ω･^=)
+                                            </AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Xóa là biến mất vĩnh viễn khỏi thư viện của bạn luôn nha… ~ (≧ᆺ≦)
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>
+                                                Thôi, tớ đổi ý rồi~ (ฅ^ω^ฅ)
+                                            </AlertDialogCancel>
+                                            <AlertDialogAction onClick={handleDeleteMultiple}>
+                                                Đúng vậy! (=^･ｪ･^=)/
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            ) : (
+                                <Button
+                                    sizeCustom='xs'
+                                    variant='ghost'
+                                    className="text-red-600 dark:text-red-400 hover:text-red-600"
+                                    onClick={() => setDeleteAll(true)}
+                                >
+                                    <Trash className="size-3 sm:size-4"/>
+                                    Xoá nhiều truyện
+                                </Button>
+                            ))
                             // ** End Btn Action delete all
                         }
 
@@ -161,9 +167,10 @@ const ReadingHistory = () => {
                             <>
                                 {/* Selected/unSelected all Btn*/}
                                 <Button
-                                    shape="rectangleSmall"
+                                    sizeCustom='xs'
+                                    variant='ghost'
                                     onClick={handleSelectAll}
-                                    className={`${selected.length === listHistory.length ? 'text-black/80 dark:text-white/80 hover:opacity-80' : 'text-primaryColor opacity-80'}`}
+                                    className={`${selected.length === listHistory.length ? 'text-black/80 dark:text-white/80 hover:opacity-80' : 'text-primary opacity-80'}`}
                                 >
                                     {selected.length === listHistory.length
                                         ? 'Bỏ chọn tất cả'
@@ -173,7 +180,8 @@ const ReadingHistory = () => {
 
                                 {/* Cancel Btn*/}
                                 <Button
-                                    shape="rectangleSmall"
+                                    sizeCustom='xs'
+                                    variant='ghost'
                                     onClick={() => {
                                         setDeleteAll(false);
                                         setSelected([]);
@@ -188,9 +196,11 @@ const ReadingHistory = () => {
                 )}
             </div>
 
+            {/*  List Comic  */}
             {isHistory ? (
-                <div className="mt-10">
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-y-4 gap-2 md:gap-2.5 lg:gap-3 mb-8">
+                <div className='mt-4'>
+                    <div
+                        className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-y-4 gap-2 md:gap-2.5 lg:gap-3 mb-8">
                         {listHistory.map((item, i) => (
                             <figure
                                 key={item._id}
@@ -211,25 +221,24 @@ const ReadingHistory = () => {
                                     }
                                 >
                                     <ComicImage
-                                        src={`${CONFIG_API_OUT_SIDE.IMAGE.INDEX}/${item.image}`}
+                                        src={`${CONFIG_API_OTRUYEN.IMAGE_COMIC}/${item.image}`}
                                         alt={item.name}
                                         imgSize="lg"
-                                        priority={i <= 0 ? true : false}
+                                        priority={i <= 0}
                                     />
                                 </div>
 
                                 <figcaption
-                                    className="mt-1.5 text-center"
-                                    title={item.name}
+                                    className="mt-1.5 text-center flex flex-col flex-1"
+                                    title={item.chapter}
                                 >
-                                    <Heading
-                                        as="h2"
-                                        title={item.name}
-                                        href={item.path}
-                                        size="sm"
-                                    />
-                                    <Link href={item.path}>
-                                        <p className="line-clamp-1 text-xs mt-1.5 hover:text-primaryColor">
+                                    <Link href={`/${CONFIG_SLUG.DETAIL}/${item.slug}`}>
+                                        <h2 title={item.name} className='line-clamp-2 text-sm'>
+                                            {item.name}
+                                        </h2>
+                                    </Link>
+                                    <Link href={item.path} className='mt-auto'>
+                                        <p className="line-clamp-1 text-xs mt-1.5 text-destructive hover:underline">
                                             Đọc tiếp chương {item.chapter}
                                         </p>
                                     </Link>
@@ -249,29 +258,26 @@ const ReadingHistory = () => {
                                     ) : (
                                         <AlertDialog>
                                             <AlertDialogTrigger asChild>
-                                                <div className="bg-red-500/60 rounded-full hover:bg-red-400 p-1 sm:p-1.5">
-                                                    <X className="size-2.5 sm:size-3 text-white" />
+                                                <div
+                                                    className="bg-red-500/60 rounded-full hover:bg-red-400 p-1 sm:p-1.5">
+                                                    <X className="size-2.5 sm:size-3 text-white"/>
                                                 </div>
                                             </AlertDialogTrigger>
                                             <AlertDialogContent>
                                                 <AlertDialogHeader>
                                                     <AlertDialogTitle>
-                                                        Ôi không! Bạn muốn tiễn truyện {item.name} lên thiên đường truyện tranh? (=^･ω･^=)
+                                                        Hic… {item.name} sắp bị xóa khỏi bookmark của bạn thật hả? (=^･ω･^=)
                                                     </AlertDialogTitle>
                                                     <AlertDialogDescription>
-                                                        Hành động này sẽ xoá truyện vĩnh viễn. Nhưng đừng buồn, ký ức về nó vẫn luôn ở lại trong tim bạn! (ฅ^ω^ฅ)
+                                                        Xóa là không còn thấy nó trong thư viện nữa đâu… (ฅ^ω^ฅ)
                                                     </AlertDialogDescription>
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>
-                                                    <AlertDialogCancel asChild>
-                                                        <Button variant='outline'>
-                                                            Thôi, tớ đổi ý rồi~ (=^･^=)
-                                                        </Button>
+                                                    <AlertDialogCancel>
+                                                        Thôi, tớ đổi ý rồi~ (=^･^=)
                                                     </AlertDialogCancel>
-                                                    <AlertDialogAction asChild>
-                                                        <Button onClick={() => handleDelete(item._id)} variant='danger'>
-                                                            Đúng vậy! (=^･ｪ･^=)/
-                                                        </Button>
+                                                    <AlertDialogAction onClick={() => handleDelete(item._id)}>
+                                                        Đúng vậy! (=^･ｪ･^=)/
                                                     </AlertDialogAction>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
@@ -282,14 +288,9 @@ const ReadingHistory = () => {
                         ))}
                     </div>
 
-                    {/*<PaginationWithLinks*/}
-                    {/*    page={1}*/}
-                    {/*    pageSize={1}*/}
-                    {/*    totalCount={10}*/}
-                    {/*/>*/}
                 </div>
             ) : (
-                <EmptyPage />
+                <EmptyPage/>
             )}
         </section>
     );

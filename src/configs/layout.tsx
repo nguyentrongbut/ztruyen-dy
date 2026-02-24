@@ -6,7 +6,7 @@ import {
     Sparkles, Facebook,
 } from 'lucide-react';
 
-// ** Header
+// ** Index
 export const navHeader: TLinkWithIcon[] = [
     {
         title: 'Thể loại',

@@ -1,85 +1,30 @@
-'use client'
+// ** Module components
+import NavListGenre from "@/modules/the-loai/NavListGenre";
 
-// ** React
-import { useLayoutEffect, useRef } from 'react';
+// ** Components
+import ErrorText from "@/components/common/ErrorText";
 
-// ** Hooks
-import useTailwindBreakpoints from '@/hooks/useTailwindBreakpoints';
+// ** Services
+import { getListGenre } from '@/services/categories';
 
-// ** Next
-import Link from 'next/link';
-
-interface IListGenreProps {
-    data: IGenres[],
-    slug: string
+type TListGenreProps = {
+    slug: string;
 }
 
-const ListGenre = ({data, slug}: IListGenreProps) => {
+const ListGenre = async ({slug}: TListGenreProps) => {
+    const res = await getListGenre();
 
-    const activeRef = useRef<HTMLAnchorElement | null>(null);
-    const { isSm } = useTailwindBreakpoints();
+    const listGenre = res.data?.items;
 
-    useLayoutEffect(() => {
-        if (!isSm && activeRef.current) {
-            const parent = activeRef.current.closest("ul");
-            if (parent) {
-                const parentRect = parent.getBoundingClientRect();
-                const itemRect = activeRef.current.getBoundingClientRect();
-
-                parent.scrollTop += itemRect.top - parentRect.top + 4;
-            }
-        }
-    }, [slug, isSm]);
+    if (!listGenre) return <ErrorText/>;
 
     return (
-        <ul className="flex gap-3.5 flex-wrap text-[15px] h-[122px] sm:h-auto overflow-y-auto sm:overflow-visible custom-scroll">
-            {data.map((item, index) => (
-                <li key={index}>
-                    {item.slug === slug ? (
-                        <h1>
-                            <Link
-                                ref={activeRef}
-                                href={`/the-loai/${item.slug}.html`}
-                                className={`active:bg-primaryColor active:text-primary rounded-[5px] px-[10px] py-1.5 ${item.slug === slug && 'text-primaryColor'}`}
-                            >
-                                {item.name}
-                            </Link>
-                        </h1>
-                    ) : (
-                        <h2>
-                            <Link
-                                href={`/the-loai/${item.slug}.html`}
-                                className={`active:bg-primaryColor active:text-primary rounded-[5px] px-[10px] py-1.5 ${item.slug === slug && 'text-primaryColor'}`}
-                            >
-                                {item.name}
-                            </Link>
-                        </h2>
-                    )}
-                </li>
-            ))}
-            <li>
-                {'tat-ca' === slug ? (
-                    <h1>
-                        <Link
-                            ref={activeRef}
-                            href={`/the-loai/tat-ca.html`}
-                            className="active:bg-primaryColor active:text-primary rounded-[5px] px-[10px] py-1.5 text-primaryColor"
-                        >
-                            Tất cả
-                        </Link>
-                    </h1>
-                ) : (
-                    <h2>
-                        <Link
-                            href={`/the-loai/tat-ca.html`}
-                            className="active:bg-primaryColor active:text-primary rounded-[5px] px-[10px] py-1.5"
-                        >
-                            Tất cả
-                        </Link>
-                    </h2>
-                )}
-            </li>
-        </ul>
+        <nav className="container flex gap-4 pt-6 pb-3">
+            <p className="flex-shrink-0 text-sm dark:text-[#ffffffbd] text-[#00000057]">
+                Thể loại
+            </p>
+            <NavListGenre listGenre={listGenre}  slug={slug} />
+        </nav>
     )
 }
 

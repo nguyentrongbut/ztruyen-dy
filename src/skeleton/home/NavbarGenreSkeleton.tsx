@@ -1,19 +1,22 @@
+// ** shadcn ui
 import { Skeleton } from '@/components/ui/skeleton';
 
 const NavbarGenreSkeleton = () => {
     return (
-        <nav className="flex justify-center py-3.5 sm:py-[26px] bg-secondary text-primary dark:bg-black dark:text-primary">
-            <ul className="flex sm:gap-7 gap-5 container justify-center wrapper">
+        <nav className="bg-black/90 flex justify-center py-3.5 sm:py-5">
+            <ul className="flex sm:gap-7 gap-5 container justify-center">
                 {[...Array(9)].map((_, index) => (
                     <li
                         key={index}
-                        className={`
-                            block
-                            ${index > 4 ? 'hidden md:block' : ''}  
-                            ${index > 6 ? 'hidden lg:block' : ''} 
-                        `}
+                        className={`${
+                            index + 1 === 7 || index + 1 === 8
+                                ? 'hidden lg:block'
+                                : index + 1 === 5 || index + 1 === 6
+                                    ? 'hidden sm:block'
+                                    : 'block'
+                        }`}
                     >
-                        <Skeleton className="h-4 w-[40px] lg:w-[49px]" />
+                        <Skeleton className="h-3 sm:h-4 w-10 sm:w-12" />
                     </li>
                 ))}
             </ul>
