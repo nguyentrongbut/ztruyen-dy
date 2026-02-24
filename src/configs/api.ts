@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_API_OTRUYEN_URL;
+export const baseUrl = process.env.NEXT_PUBLIC_API_OTRUYEN_URL;
 const imgChapterUrl = process.env.NEXT_PUBLIC_API_URL_CHAPTER_OUT_SIDE
 const chapterUrl = imgChapterUrl + '/v1/api'
 
