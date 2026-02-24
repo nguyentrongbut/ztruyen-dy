@@ -44,7 +44,7 @@ const ListSearchComic = async ({keyword, pageQuery}: TListSearchComicProps) => {
                             className="flex gap-4"
                         >
                             {/* Thumb */}
-                            <Link href={`/${CONFIG_SLUG.DETAIL}/${item.slug}.html`}>
+                            <Link href={`/${CONFIG_SLUG.DETAIL}/${item.slug}`}>
                                 <ComicImage
                                     src={`${CONFIG_API_OTRUYEN.IMAGE_COMIC}/${item.thumb_url}`}
                                     alt={item.name}
@@ -55,7 +55,7 @@ const ListSearchComic = async ({keyword, pageQuery}: TListSearchComicProps) => {
                             <figcaption className="w-[180px] flex flex-col justify-between">
 
                                 {/* Title*/}
-                                <Link href={`/${CONFIG_SLUG.DETAIL}/${item.slug}.html`}>
+                                <Link href={`/${CONFIG_SLUG.DETAIL}/${item.slug}`}>
                                     <h2 className='text-base lg:text-lg font-medium line-clamp-3' title={item.name}>
                                         {item.name}
                                     </h2>
