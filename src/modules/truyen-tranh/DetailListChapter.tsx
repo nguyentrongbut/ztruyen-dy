@@ -27,7 +27,7 @@ const DetailListChapter = ({listChapter, slug}: TDetailListChapterProps) => {
             <RangeBtnPagination chapters={listChapter[0].server_data as TOtruyenChapter[]} slug={slug}/>
             <section className="mt-10">
                 <h2 className='mb-4 text-lg font-medium'>Bình luận truyện</h2>
-                <div className="max-h-[600px] overflow-y-auto custom-scroll px-2">
+                <div className="max-h-[600px] overflow-y-auto custom-scroll px-2 border border-transparent">
                     <GiscusComments />
                 </div>
             </section>
