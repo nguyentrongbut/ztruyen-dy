@@ -1,57 +1,96 @@
-'use client'
+'use client';
 
 // ** Next
-import Link from "next/link";
+import Link from 'next/link';
 
 // ** React
-import {Dispatch, RefObject, SetStateAction, useEffect, useRef, useState} from "react";
+import {
+    Dispatch,
+    RefObject,
+    SetStateAction,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 
 // ** Hook
-import useTailwindBreakpoints from "@/hooks/common/useTailwindBreakpoints";
+import useTailwindBreakpoints from '@/hooks/common/useTailwindBreakpoints';
 
 // ** Icons
-import {BookOpenText, ChevronLeft, ChevronRight, Expand, Menu, Minus, Plus, Shrink} from "lucide-react";
+import {
+    BookOpenText,
+    ChevronLeft,
+    ChevronRight,
+    Expand,
+    Menu,
+    MessageSquare,
+    Minus,
+    Plus,
+    Shrink,
+} from 'lucide-react';
 
 // ** Shadcn ui
-import {Slider} from "@/components/ui/slider";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import { Slider } from '@/components/ui/slider';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet';
+
+// ** Components
+import GiscusComments from '@/components/common/GiscusComments';
 
 // ** Config
-import {CONFIG_SLUG} from "@/configs/slug";
+import { CONFIG_SLUG } from '@/configs/slug';
 
 // ** Type
 import { TOtruyenChapter } from '@/types/api';
 
 // ** Util
-import {buildReadingUrl} from "@/utils/buildReadingUrl ";
-import getIdFromUrl from "@/utils/getIdFromUrl";
+import { buildReadingUrl } from '@/utils/buildReadingUrl ';
+import getIdFromUrl from '@/utils/getIdFromUrl';
+
 
 type TOverlaySettings = {
-    imgWidth?: number
-    setImgWidth: (imgWidth: number) => void
-    currentImageIndex: number
-    setCurrentImageIndex: (currentImageIndex: number) => void
+    imgWidth?: number;
+    setImgWidth: (imgWidth: number) => void;
+    currentImageIndex: number;
+    setCurrentImageIndex: (currentImageIndex: number) => void;
     imgRefs: RefObject<(HTMLImageElement | null)[]>;
-    totalImage: number
-    slugComic: string
-    nextChapter: TOtruyenChapter
-    prevChapter: TOtruyenChapter
-    chapters: TOtruyenChapter[]
-    currentChapterId: string
+    totalImage: number;
+    slugComic: string;
+    nextChapter: TOtruyenChapter;
+    prevChapter: TOtruyenChapter;
+    chapters: TOtruyenChapter[];
+    currentChapterId: string;
     isDropdownOpen: boolean;
     setIsDropdownOpen: Dispatch<SetStateAction<boolean>>;
-}
+};
 
 const OverlaySettings = ({
-                             imgWidth = 50, setImgWidth, totalImage,
-                             currentImageIndex, setCurrentImageIndex,
-                             imgRefs, chapters, currentChapterId,
-                             isDropdownOpen, setIsDropdownOpen,
-                             slugComic, nextChapter, prevChapter
-                         }: TOverlaySettings) => {
-
+    imgWidth = 50,
+    setImgWidth,
+    totalImage,
+    currentImageIndex,
+    setCurrentImageIndex,
+    imgRefs,
+    chapters,
+    currentChapterId,
+    isDropdownOpen,
+    setIsDropdownOpen,
+    slugComic,
+    nextChapter,
+    prevChapter,
+}: TOverlaySettings) => {
     // Hook
-    const {isMd} = useTailwindBreakpoints();
+    const { isMd } = useTailwindBreakpoints();
 
     // State
     const [isFullScreen, setIsFullScreen] = useState(false);
@@ -130,41 +169,71 @@ const OverlaySettings = ({
     const toggleFullScreen = async () => {
         try {
             if (!document.fullscreenElement) {
-                await document.documentElement.requestFullscreen()
-                setIsFullScreen(true)
+                await document.documentElement.requestFullscreen();
+                setIsFullScreen(true);
             } else {
-                await document.exitFullscreen()
-                setIsFullScreen(false)
+                await document.exitFullscreen();
+                setIsFullScreen(false);
             }
         } catch (error) {
-            console.error("Fullscreen error:", error)
+            console.error('Fullscreen error:', error);
         }
-    }
+    };
 
     // Handle fullscreen change event (when user presses ESC)
     useEffect(() => {
         const onChange = () => {
-            setIsFullScreen(!!document.fullscreenElement)
-        }
+            setIsFullScreen(!!document.fullscreenElement);
+        };
 
-        document.addEventListener("fullscreenchange", onChange)
-        return () => document.removeEventListener("fullscreenchange", onChange)
-    }, [])
+        document.addEventListener('fullscreenchange', onChange);
+        return () => document.removeEventListener('fullscreenchange', onChange);
+    }, []);
     //  End Full Screen
 
     return (
-        <div
-            className="w-full absolute bottom-0 flex flex-col items-center left-1/2 -translate-x-1/2 transition-opacity duration-500 ease-in-out"
-        >
-            <div
-                className="bg-setting rounded-[40px] text-white/90 flex items-center justify-center px-5 max-w-max pt-1 gap-1.5">
+        <div className="w-full absolute bottom-0 flex flex-col items-center left-1/2 -translate-x-1/2 transition-opacity duration-500 ease-in-out">
+            <div className="bg-setting rounded-[40px] text-white/90 flex items-center justify-center px-5 max-w-max pt-1 gap-1.5">
+                {/* Comment */}
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <div className="flex flex-col items-center gap-1 p-2 cursor-pointer">
+                            <MessageSquare className="size-5 text-setting" />
+                            <span className="text-xs">Bình luận</span>
+                        </div>
+                    </SheetTrigger>
+                    <SheetContent
+                        side="bottom"
+                        className="h-[85vh] sm:h-[90vh] max-h-screen overflow-hidden flex flex-col p-0"
+                    >
+                        {/* Fixed Header */}
+                        <SheetHeader className="px-4 sm:px-6 pt-6 pb-4 border-b border-border flex-shrink-0 bg-background">
+                            <SheetTitle className="text-lg font-medium">
+                                Bình luận - Chương{' '}
+                                {chapters.find(
+                                    (ch) =>
+                                        getIdFromUrl(
+                                            ch.chapter_api_data,
+                                            '/'
+                                        ) === currentChapterId
+                                )?.chapter_name || ''}
+                            </SheetTitle>
+                        </SheetHeader>
+
+                        {/* Scrollable Content */}
+                        <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scroll px-4 sm:px-6 py-4">
+                            <GiscusComments />
+                        </div>
+                    </SheetContent>
+                </Sheet>
+
                 {/* Detail comic btn*/}
                 {!isMd && (
                     <Link
                         href={`/${CONFIG_SLUG.DETAIL}/${slugComic}`}
                         className="flex flex-col items-center gap-1 p-2 cursor-pointer text-setting"
                     >
-                        <BookOpenText className="size-5"/>
+                        <BookOpenText className="size-5" />
                         <span className="text-white text-xs">
                             Chi tiết truyện
                         </span>
@@ -184,21 +253,23 @@ const OverlaySettings = ({
                 >
                     <DropdownMenuTrigger asChild>
                         <div className="flex flex-col items-center gap-1 p-2 cursor-pointer ">
-                            <Menu className="size-5 text-setting"/>
+                            <Menu className="size-5 text-setting" />
                             <span className="text-xs">Mục lục</span>
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent asChild>
-                        <div
-                            className="p-4 rounded-2xl w-[240px] sm:w-[280px] !bg-[#272727e6] border-none text-white mb-2">
-                            <div
-                                className="text-sm sm:text-base mb-4 ml-3">{`Tất cả các chương (${chapters[chapters.length - 1].chapter_name})`}</div>
+                        <div className="p-4 rounded-2xl w-[240px] sm:w-[280px] !bg-[#272727e6] border-none text-white mb-2">
+                            <div className="text-sm sm:text-base mb-4 ml-3">{`Tất cả các chương (${chapters[chapters.length - 1].chapter_name})`}</div>
                             <ul
                                 ref={listRef}
                                 className="bg-[#121212] rounded-2xl overflow-auto max-h-[320px] sm:max-h-[400px] scroll-hidden"
                             >
                                 {chapters?.map((item, index) => {
-                                    const activeChapter = getIdFromUrl(item.chapter_api_data, '/') === currentChapterId;
+                                    const activeChapter =
+                                        getIdFromUrl(
+                                            item.chapter_api_data,
+                                            '/'
+                                        ) === currentChapterId;
 
                                     return (
                                         <li
@@ -208,7 +279,11 @@ const OverlaySettings = ({
                                             }
                                         >
                                             <Link
-                                                href={buildReadingUrl(slugComic, item.chapter_name, item.chapter_api_data)}
+                                                href={buildReadingUrl(
+                                                    slugComic,
+                                                    item.chapter_name,
+                                                    item.chapter_api_data
+                                                )}
                                                 className={`px-5 sm:px-10 py-3 block text-xs sm:text-sm text-center hover:bg-black ${activeChapter ? 'active-chapter text-primary' : ''}`}
                                             >
                                                 {`Chương ${item.chapter_name} ${item.chapter_title ? `- ${item.chapter_title}` : ''}`}
@@ -229,14 +304,14 @@ const OverlaySettings = ({
                     >
                         {isFullScreen ? (
                             <>
-                                <Shrink className="size-5"/>
+                                <Shrink className="size-5" />
                                 <span className="text-white text-xs">
                                     Thoát chế độ toàn màn hình
                                 </span>
                             </>
                         ) : (
                             <>
-                                <Expand className="text-setting size-5"/>
+                                <Expand className="text-setting size-5" />
                                 <span className="text-xs">
                                     Xem toàn màn hình
                                 </span>
@@ -247,20 +322,22 @@ const OverlaySettings = ({
             </div>
 
             {/*  Slider Group  */}
-            <div
-                className="mt-5 p-3 md:p-0 md:my-5 flex flex-1 w-full md:w-[600px] md:min-w-[120px] bg-setting md:rounded-[40px] items-center justify-between gap-4 relative">
-
+            <div className="mt-5 p-3 md:p-0 md:my-5 flex flex-1 w-full md:w-[600px] md:min-w-[120px] bg-setting md:rounded-[40px] items-center justify-between gap-4 relative">
                 {/* Prev btn*/}
                 {prevChapter ? (
                     <Link
-                        href={buildReadingUrl(slugComic, prevChapter.chapter_name, prevChapter.chapter_api_data)}
+                        href={buildReadingUrl(
+                            slugComic,
+                            prevChapter.chapter_name,
+                            prevChapter.chapter_api_data
+                        )}
                         className="p-2"
                     >
-                        <ChevronLeft className="size-6"/>
+                        <ChevronLeft className="size-6" />
                     </Link>
                 ) : (
                     <span className="p-2 opacity-50">
-                        <ChevronLeft className="size-6"/>
+                        <ChevronLeft className="size-6" />
                     </span>
                 )}
 
@@ -274,21 +351,25 @@ const OverlaySettings = ({
                     step={1}
                     value={[currentImageIndex + 1]}
                     onValueChange={(value) =>
-                        handleSliderChange({target: {value: value[0]}})
+                        handleSliderChange({ target: { value: value[0] } })
                     }
                     className="cursor-pointer"
                 />
                 {/* Next btn*/}
                 {nextChapter ? (
                     <Link
-                        href={buildReadingUrl(slugComic, nextChapter.chapter_name, nextChapter.chapter_api_data)}
+                        href={buildReadingUrl(
+                            slugComic,
+                            nextChapter.chapter_name,
+                            nextChapter.chapter_api_data
+                        )}
                         className="p-2"
                     >
-                        <ChevronRight className="size-6"/>
+                        <ChevronRight className="size-6" />
                     </Link>
                 ) : (
                     <span className="p-2 opacity-50">
-                        <ChevronRight className="size-6"/>
+                        <ChevronRight className="size-6" />
                     </span>
                 )}
 
@@ -299,14 +380,14 @@ const OverlaySettings = ({
                             className="p-3 cursor-pointer"
                             onClick={handlePlusChange}
                         >
-                            <Plus className="size-4"/>
+                            <Plus className="size-4" />
                         </span>
                         <span className="text-[13px] text-setting">{`${imgWidth}%`}</span>
                         <span
                             className="p-3 cursor-pointer"
                             onClick={handleMinusChange}
                         >
-                            <Minus className="size-4"/>
+                            <Minus className="size-4" />
                         </span>
                     </div>
                 </div>
@@ -314,7 +395,7 @@ const OverlaySettings = ({
                 {/* End Zoom in/out */}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default OverlaySettings;
