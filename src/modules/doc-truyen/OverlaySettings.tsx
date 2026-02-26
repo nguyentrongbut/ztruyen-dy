@@ -57,7 +57,6 @@ import { TOtruyenChapter } from '@/types/api';
 import { buildReadingUrl } from '@/utils/buildReadingUrl ';
 import getIdFromUrl from '@/utils/getIdFromUrl';
 
-
 type TOverlaySettings = {
     imgWidth?: number;
     setImgWidth: (imgWidth: number) => void;
@@ -252,7 +251,10 @@ const OverlaySettings = ({
                     }}
                 >
                     <DropdownMenuTrigger asChild>
-                        <div className="flex flex-col items-center gap-1 p-2 cursor-pointer ">
+                        <div
+                            className="flex flex-col items-center gap-1 p-2 cursor-pointer"
+                            onClick={(e) => e.stopPropagation()}
+                        >
                             <Menu className="size-5 text-setting" />
                             <span className="text-xs">Mục lục</span>
                         </div>

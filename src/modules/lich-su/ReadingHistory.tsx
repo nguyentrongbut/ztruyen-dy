@@ -43,7 +43,7 @@ import { CONFIG_API_OTRUYEN } from '@/configs/api';
 import { CONFIG_SLUG } from '@/configs/slug';
 
 // ** Skeleton
-import ListComicByStatusSkeleton from '@/skeleton/common/ListComicByStatusSkeleton';
+import ListComicHistorySkeleton from '@/skeleton/lich-su/ListComicHistorySkeleton';
 
 const ReadingHistory = () => {
 
@@ -102,7 +102,7 @@ const ReadingHistory = () => {
         }
     };
 
-    if (isLoading) return <ListComicByStatusSkeleton/>
+    if (isLoading) return <ListComicHistorySkeleton />
 
     return (
         <section className="min-h-[54vh] container pt-2 pb-20">
