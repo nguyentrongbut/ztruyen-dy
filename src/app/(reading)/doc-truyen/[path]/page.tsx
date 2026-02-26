@@ -70,7 +70,7 @@ const ReadingComic = async ({ params }: TReadingComic) => {
                     {prevChapter ? (
                         <Link
                             href={`/${CONFIG_SLUG.READING}/${getChapterName(slugComic)}-chuong-${prevChapter?.chapter_name}-${getIdFromUrl(prevChapter?.chapter_api_data, '/')}.html`}
-                            className="flex items-center gap-1 text-xs hover:text-primaryColor active:text-primaryColor"
+                            className="flex items-center gap-1 text-xs hover:text-primary active:text-primary"
                         >
                             <ChevronLeft className="size-4" />
                             <span className="hidden sm:block">Chương</span>
@@ -99,7 +99,7 @@ const ReadingComic = async ({ params }: TReadingComic) => {
                     {nextChapter ? (
                         <Link
                             href={`/${CONFIG_SLUG.READING}/${slugComic}-chuong-${nextChapter?.chapter_name}-${getIdFromUrl(nextChapter?.chapter_api_data, '/')}.html`}
-                            className="flex items-center gap-1 text-xs hover:text-primaryColor active:text-primaryColor"
+                            className="flex items-center gap-1 text-xs hover:text-primary active:text-primary"
                         >
                             <span className="hidden sm:block">Chương</span>
                             <span className="capitalize sm:normal-case">
