@@ -313,6 +313,11 @@
     }
 
     /* End Shadcn ui component*/
+
+    /* Btn */
+    button[type=button] {
+        @apply dark:text-white
+    }
 }
 
 

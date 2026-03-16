@@ -1,5 +1,8 @@
 'use server'
 
+// ** React
+import { cache } from 'react';
+
 // ** fetch wrapper
 import { fetchAPI } from '@/lib/actions/api';
 
@@ -9,6 +12,10 @@ import { IOtruyenDetailComic } from '@/types/api';
 // ** Config
 import { CONFIG_API_OTRUYEN } from '@/configs/api';
 
-export async function getDetailComic(slug: string) {
-    return fetchAPI<IApiOtruyenResDetail<IOtruyenDetailComic>>(`${CONFIG_API_OTRUYEN.COMIC}/${slug}`, {}, 60);
-}
+export const getDetailComic = cache(async (slug: string) => {
+    return fetchAPI<IApiOtruyenResDetail<IOtruyenDetailComic>>(
+        `${CONFIG_API_OTRUYEN.COMIC}/${slug}`,
+        {},
+        60
+    )
+})

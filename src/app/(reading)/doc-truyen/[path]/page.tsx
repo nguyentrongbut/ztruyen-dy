@@ -1,10 +1,11 @@
 // Cloudflare Pages build
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ReadingComicSchema from '@/components/schema/ReadingComicSchema';
 
 export const runtime = 'edge';
 
 // ** Next
 import Link from 'next/link';
+import { Metadata } from 'next';
 
 // ** Component
 import ErrorText from '@/components/common/ErrorText';
@@ -21,6 +22,7 @@ import { getListImageChapter } from '@/services/chapter';
 
 // ** Config
 import { CONFIG_SLUG } from '@/configs/slug';
+import { BASE_URL, CONFIG_API_OTRUYEN } from '@/configs/api';
 
 // ** Utils
 import removeExtension from '@/utils/removeExtension';
@@ -30,9 +32,69 @@ import { getChapterName } from '@/utils/getChapterName';
 // ** Type
 import { TOtruyenChapter } from '@/types/api';
 
+// ** Icons
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 type TReadingComic = {
     params: Promise<{ path: string }>;
 };
+
+export async function generateMetadata({
+                                           params
+                                       }: TReadingComic): Promise<Metadata> {
+
+    const { path } = await params
+
+    const paths = removeExtension(path, '.html')
+    const slugComic = getChapterName(paths)
+    const chapterId = getIdFromUrl(paths, '-')
+
+    const resDetail = await getDetailComic(slugComic)
+    const resChapter = await getListImageChapter(chapterId)
+
+    const comic = resDetail.data?.item
+    const chapter = resChapter.data?.item
+
+    if (!comic || !chapter) return {}
+
+    const chapterName = chapter.chapter_name
+
+    const title = `${comic.name} - Chương ${chapterName} | Ztruyện`
+    const description = `Đọc truyện tranh ${comic.name} chương ${chapterName} tiếng Việt. Cập nhật nhanh nhất tại Ztruyện.`
+
+    return {
+        title,
+        description,
+
+        alternates: {
+            canonical: `${BASE_URL}/${CONFIG_SLUG.READING}/${path}`
+        },
+
+        openGraph: {
+            title,
+            description,
+            url: `${BASE_URL}/${CONFIG_SLUG.READING}/${path}`,
+            siteName: 'Ztruyện',
+            images: [
+                {
+                    url: `${CONFIG_API_OTRUYEN.IMAGE_COMIC}/${comic.thumb_url}`,
+                    width: 1200,
+                    height: 630,
+                    alt: `${comic.name} - Chương ${chapterName}`
+                }
+            ],
+            locale: 'vi_VN',
+            type: 'article'
+        },
+
+        twitter: {
+            card: 'summary_large_image',
+            title,
+            description,
+            images: [`${CONFIG_API_OTRUYEN.IMAGE_COMIC}/${comic.thumb_url}`]
+        },
+    }
+}
 
 const ReadingComic = async ({ params }: TReadingComic) => {
     const { path } = await params;
@@ -65,6 +127,13 @@ const ReadingComic = async ({ params }: TReadingComic) => {
 
     return (
         <>
+            <ReadingComicSchema
+                comicName={listDetailComic.name}
+                chapterName={listDetailImageChapter.chapter_name}
+                image={`${CONFIG_API_OTRUYEN.IMAGE_COMIC}/${listDetailComic.thumb_url}`}
+                author={listDetailComic.author}
+                path={path}
+            />
             <Header asChild>
                 <div className="flex items-center justify-between gap-5">
                     {prevChapter ? (

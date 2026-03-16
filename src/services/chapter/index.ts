@@ -1,14 +1,20 @@
 'use server'
 
+import { cache } from 'react'
+
 // ** fetch wrapper
-import { fetchAPI } from '@/lib/actions/api';
+import { fetchAPI } from '@/lib/actions/api'
 
 // ** Types
-import { IOTruyenChapter } from '@/types/api';
+import { IOTruyenChapter } from '@/types/api'
 
 // ** Config
-import { CONFIG_API_OTRUYEN } from '@/configs/api';
+import { CONFIG_API_OTRUYEN } from '@/configs/api'
 
-export async function getListImageChapter(id: string) {
-    return fetchAPI<IApiOtruyenResDetail<IOTruyenChapter>>(`${CONFIG_API_OTRUYEN.CHAPTER}/${id}`, {}, 60);
-}
+export const getListImageChapter = cache(async (id: string) => {
+    return fetchAPI<IApiOtruyenResDetail<IOTruyenChapter>>(
+        `${CONFIG_API_OTRUYEN.CHAPTER}/${id}`,
+        {},
+        3600
+    )
+})

@@ -2,6 +2,8 @@ export const baseUrl = process.env.NEXT_PUBLIC_API_OTRUYEN_URL;
 const imgChapterUrl = process.env.NEXT_PUBLIC_API_URL_CHAPTER_OUT_SIDE
 const chapterUrl = imgChapterUrl + '/v1/api'
 
+export const BASE_URL = process.env.NEXT_PUBLIC_YOUR_WEBSITE
+
 export const CONFIG_API_OTRUYEN = {
     HOME: `${baseUrl}/home`,
     LIST: `${baseUrl}/danh-sach`,

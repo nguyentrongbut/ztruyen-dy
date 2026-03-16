@@ -63,6 +63,7 @@ export interface IOtruyenDetailComic {
     author: string[];
     category: TOtruyenCategory[];
     chapters: TOtruyenChapterServer[]
+    updatedAt: string
 }
 
 export interface IOtruyenSearchComic {

@@ -2,7 +2,7 @@
 import { Suspense } from 'react';
 
 // ** Next
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Bangers, Montserrat, Nunito } from 'next/font/google';
 import Script from 'next/script';
 
@@ -15,9 +15,13 @@ import NprogressWrapper from '@/components/common/nprogress.wrapper';
 import ToasterCustom from '@/components/common/ToasterCustom';
 import ScrollToTop from '@/components/common/ScrollToTop';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import BusinessSchema from '@/components/schema/BusinessSchema';
 
 // ** Module component
 import WelcomePopup from '@/modules/home/WelcomePopup';
+
+// ** Config
+import { BASE_URL } from '@/configs/api';
 
 // UI / Button / Filter
 const montserrat = Montserrat({
@@ -41,15 +45,18 @@ const nunito = Nunito({
     weight: ['400', '500', '600', '700'],
     variable: '--font-text',
     display: 'swap',
+    preload: true,
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_YOUR_WEBSITE || ''),
-    title: 'Đọc truyện tranh Manhwa, Manga, Manhua Online - Ztruyện ',
+    title: {
+        template: '%s | Ztruyện',
+        default: 'Đọc truyện tranh Manhwa, Manga, Manhua Online - Ztruyện',
+    },
     description:
         'Web đọc truyện tranh manhwa, manhua, manga, ngôn tình, tiên hiệp, kiếm hiệp online hay và mới nhất cập nhật liên tục tại ztruyen.io.vn',
     generator: 'Next.js',
-    applicationName: 'ztruyen.io.vn Atom Feed - Rss,',
+    applicationName: 'Ztruyen',
     referrer: 'origin-when-cross-origin',
     keywords: [
         'doc truyen tranh',
@@ -64,26 +71,38 @@ export const metadata: Metadata = {
     ],
     creator: 'Cloly',
     publisher: 'Cloly',
-    formatDetection: {
-        email: false,
-        address: false,
-        telephone: false,
-    },
     openGraph: {
         title: 'Đọc truyện tranh Manhwa, Manga, Manhua Online - Ztruyện ',
         description:
             'Web đọc truyện tranh manhwa, manhua, manga, ngôn tình, tiên hiệp, kiếm hiệp online hay và mới nhất cập nhật liên tục tại ztruyen.io.vn',
+        url: `${BASE_URL}`,
+        siteName: 'Ztruyện',
         images: [
             {
-                url: '/logo-all.png',
-                width: 400,
-                height: 200,
+                url: '/bg.png',
+                width: 1200,
+                height: 630,
+                alt: 'Ztruyện',
             },
         ],
+        locale: 'vi_VN',
+        phoneNumbers: '0326654301',
+        emails: 'ree6i6x@gmail.com',
+        type: 'website',
+        countryName: 'Việt Nam',
     },
+    alternates: {
+        canonical: BASE_URL,
+    },
+    metadataBase: new URL(BASE_URL || ''),
     verification: {
         google: process.env.NEXT_PUBLIC_VERIFICATION_GOOGLE,
     },
+};
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
 };
 
 export default function RootLayout({
@@ -96,6 +115,7 @@ export default function RootLayout({
             <body
                 className={`${montserrat.variable} ${bangers.variable} ${nunito.variable}`}
             >
+                <BusinessSchema />
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -108,7 +128,9 @@ export default function RootLayout({
                         </Suspense>
                         <TooltipProvider>
                             {children}
-                            <WelcomePopup/>
+                            <Suspense fallback={null}>
+                                <WelcomePopup />
+                            </Suspense>
                         </TooltipProvider>
                         <ToasterCustom />
                     </NprogressWrapper>

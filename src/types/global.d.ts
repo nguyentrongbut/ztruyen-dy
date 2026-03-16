@@ -62,6 +62,7 @@ declare global {
         data?: {
             items: T;
             seoOnPage: ISeoOnPage;
+            APP_DOMAIN_CDN_IMAGE: string;
             params: {
                 pagination ?: {
                     totalItems: number;

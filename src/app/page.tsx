@@ -24,6 +24,8 @@ import NavbarGenreSkeleton from '@/skeleton/home/NavbarGenreSkeleton';
 import ListComicSkeleton from '@/skeleton/home/ListComicSkeleton';
 import RecommendedComicSkeleton from '@/skeleton/home/RecommendedComicSkeleton';
 
+// ** Component
+import HomeSchema from '@/components/schema/HomeSchema';
 
 export const metadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_YOUR_WEBSITE || ''),
@@ -39,15 +41,13 @@ export const metadata: Metadata = {
     ],
     alternates: {
         canonical: `/`,
-        languages: {
-            vi: '/vi',
-        },
     },
 };
 
 const Home = () => {
     return (
         <DefaultLayout>
+            <HomeSchema/>
             <main>
                 <Suspense fallback={<GridCarouselSkeleton />}>
                     <GridCarousel />
