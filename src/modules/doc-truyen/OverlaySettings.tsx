@@ -191,7 +191,9 @@ const OverlaySettings = ({
     //  End Full Screen
 
     return (
-        <div className="w-full absolute bottom-0 flex flex-col items-center left-1/2 -translate-x-1/2 transition-opacity duration-500 ease-in-out">
+        <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full absolute bottom-0 flex flex-col items-center left-1/2 -translate-x-1/2 transition-opacity duration-500 ease-in-out">
             <div className="bg-setting rounded-[40px] text-white/90 flex items-center justify-center px-5 max-w-max pt-1 gap-1.5">
                 {/* Comment */}
                 <Sheet>

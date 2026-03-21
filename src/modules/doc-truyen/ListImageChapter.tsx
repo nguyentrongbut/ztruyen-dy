@@ -91,15 +91,19 @@ const ListImageChapter = ({
     const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!isLg) {
             e.preventDefault();
-            setIsOverlayOpen(!isOverlayOpen);
-            setIsDropdownOpen(false);
+            if (!isOverlayOpen) {
+                setIsOverlayOpen(true);
+                setIsDropdownOpen(false);
+            }
         }
     };
 
     const handleRightClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
-        setIsOverlayOpen(!isOverlayOpen);
-        setIsDropdownOpen(false);
+        if (!isOverlayOpen) {
+            setIsOverlayOpen(true);
+            setIsDropdownOpen(false);
+        }
     };
 
     return (
@@ -138,7 +142,7 @@ const ListImageChapter = ({
 
                 {/* Overlay settings */}
                 {
-                    <Overlay isOverlayOpen={isOverlayOpen}>
+                    <Overlay isOverlayOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(false)}>
                         <OverlaySettings
                             imgWidth={imgWidth}
                             setImgWidth={setImgWidth}
