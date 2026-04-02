@@ -98,6 +98,21 @@ export const metadata: Metadata = {
     verification: {
         google: process.env.NEXT_PUBLIC_VERIFICATION_GOOGLE,
     },
+    manifest: "/manifest.json",
+    icons: {
+        icon: [
+            { url: "favicon/favicon.ico" },
+            { url: "favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+            { url: "favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" }
+        ],
+        apple: [
+            { url: "/icons/apple-icon-180x180.png", sizes: "180x180" }
+        ]
+    },
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+        { media: "(prefers-color-scheme: dark)", color: "#212121" }
+    ],
 };
 
 export const viewport: Viewport = {
