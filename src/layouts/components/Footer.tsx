@@ -47,7 +47,7 @@ const Footer = () => {
 
                         {/* Bottom */}
                         <div className="flex flex-wrap items-center justify-between gap-y-3 text-sm">
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                            <div className="flex items-center gap-x-4 gap-y-2">
                                 <Link
                                     href="/thoa-thuan-nguoi-dung"
                                     target='_blank'
