@@ -109,15 +109,15 @@ export const metadata: Metadata = {
             { url: "/icons/apple-icon-180x180.png", sizes: "180x180" }
         ]
     },
-    themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-        { media: "(prefers-color-scheme: dark)", color: "#212121" }
-    ],
 };
 
 export const viewport: Viewport = {
     width: 'device-width',
     initialScale: 1,
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+        { media: "(prefers-color-scheme: dark)", color: "#212121" }
+    ],
 };
 
 export default function RootLayout({
