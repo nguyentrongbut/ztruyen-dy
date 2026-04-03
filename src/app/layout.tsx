@@ -18,7 +18,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import BusinessSchema from '@/components/schema/BusinessSchema';
 
 // ** Module component
-import WelcomePopup from '@/modules/home/WelcomePopup';
+// import WelcomePopup from '@/modules/home/WelcomePopup';
 
 // ** Config
 import { BASE_URL } from '@/configs/api';
