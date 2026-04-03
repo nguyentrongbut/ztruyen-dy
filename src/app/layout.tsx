@@ -144,7 +144,7 @@ export default function RootLayout({
                         <TooltipProvider>
                             {children}
                             <Suspense fallback={null}>
-                                <WelcomePopup />
+                                {/*<WelcomePopup />*/}
                             </Suspense>
                         </TooltipProvider>
                         <ToasterCustom />

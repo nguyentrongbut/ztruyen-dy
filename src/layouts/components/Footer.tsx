@@ -4,6 +4,7 @@ import Link from "next/link"
 // ** Components
 import Tag from "@/components/common/Tag"
 import Logo from "@/components/common/Logo"
+import InstallPWAButton from '@/components/common/InstallPWAButton';
 
 // ** Configs
 import {tagsFooter} from "@/configs/footer"
@@ -48,21 +49,15 @@ const Footer = () => {
                         {/* Bottom */}
                         <div className="flex flex-wrap items-center justify-between gap-y-3 text-sm">
                             <div className="flex items-center gap-x-4 gap-y-2">
-                                <Link
-                                    href="/thoa-thuan-nguoi-dung"
-                                    target='_blank'
-                                    className="hover:text-white/80 transition-colors"
-                                >
+                                <Link href="/thoa-thuan-nguoi-dung" target='_blank' className="hover:text-white/80 transition-colors">
                                     Thỏa thuận người dùng
                                 </Link>
                                 <span className="text-white/20">|</span>
-                                <Link
-                                    href="/chinh-sach-bao-mat"
-                                    target='_blank'
-                                    className="hover:text-white/80 transition-colors"
-                                >
+                                <Link href="/chinh-sach-bao-mat" target='_blank' className="hover:text-white/80 transition-colors">
                                     Chính sách bảo mật
                                 </Link>
+                                <span className="text-white/20">|</span>
+                                <InstallPWAButton />
                             </div>
 
                             <p className="text-sm font-medium">
