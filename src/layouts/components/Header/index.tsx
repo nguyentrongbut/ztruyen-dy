@@ -1,8 +1,5 @@
-// ** React
-import {ReactNode} from 'react';
-
 // ** Components
-import {ModeToggle} from '@/components/common/ModeToggle';
+import { ModeToggle } from '@/components/common/ModeToggle';
 import Button from '@/components/common/Button';
 import Logo from '@/components/common/Logo';
 
@@ -10,7 +7,7 @@ import Logo from '@/components/common/Logo';
 import Search from '@/layouts/components/Header/Search';
 import NavHeader from '@/layouts/components/Header/NavHeader';
 import NavHeaderMobile from '@/layouts/components/Header/NavHeaderMobile';
-import ReadingHistoryBtn from "@/layouts/components/Header/ReadingHistoryBtn";
+import ReadingHistoryBtn from '@/layouts/components/Header/ReadingHistoryBtn';
 
 // ** Shadcn ui
 import {
@@ -22,37 +19,28 @@ import {
 } from '@/components/ui/sheet';
 
 // ** Lucide Icon
-import {Menu} from 'lucide-react';
+import { Menu } from 'lucide-react';
 
-const Header = async ({
-                          asChild = false,
-                          children,
-                      }: {
-    asChild?: boolean;
-    children?: ReactNode;
-}) => {
-
+const Header = async ({ asChild = false }: { asChild?: boolean }) => {
     return (
         <header className="shadow-layout z-40 fixed left-0 top-0 right-0 bg-background">
             <nav className="container flex justify-between items-center py-2.5 font-medium text-header">
-
                 <div className="flex items-center gap-10">
-                    <Logo/>
-                    {!asChild && <NavHeader/>}
+                    <Logo />
+                    {!asChild && <NavHeader />}
                 </div>
-                {children}
                 <div className="flex items-center gap-2">
-                    {!asChild && <Search/>}
-                    <ReadingHistoryBtn/>
+                    {!asChild && <Search />}
+                    <ReadingHistoryBtn />
                     <div className="hidden xl:block">
-                        <ModeToggle/>
+                        <ModeToggle />
                     </div>
 
-                    <div className="block xl:hidden">
+                    <div className="xl:hidden">
                         <Sheet>
                             <SheetTrigger asChild className="cursor-pointer">
                                 <Button variant="ghost">
-                                    <Menu className="size-4"/>
+                                    <Menu className="size-4" />
                                 </Button>
                             </SheetTrigger>
                             <SheetContent
@@ -64,19 +52,21 @@ const Header = async ({
                                     <SheetTitle asChild={true}>
                                         <li className="mb-3 flex justify-between">
                                             <SheetClose asChild>
-                                                <Logo/>
+                                                <Logo />
                                             </SheetClose>
-                                            <ModeToggle/>
+                                            <ModeToggle />
                                         </li>
                                     </SheetTitle>
-                                    <NavHeaderMobile/>
+                                    <NavHeaderMobile />
                                 </ul>
                             </SheetContent>
                         </Sheet>
                     </div>
 
-                    <div className='hidden xl:block'>
-                        <Button sizeCustom='xs' disabled>Beta v1.1</Button>
+                    <div className="hidden xl:block">
+                        <Button sizeCustom="xs" disabled>
+                            Beta v1.1
+                        </Button>
                     </div>
                 </div>
             </nav>

@@ -134,59 +134,7 @@ const ReadingComic = async ({ params }: TReadingComic) => {
                 author={listDetailComic.author}
                 path={path}
             />
-            <Header asChild>
-                <div className="flex items-center justify-between gap-5">
-                    {prevChapter ? (
-                        <Link
-                            href={`/${CONFIG_SLUG.READING}/${getChapterName(slugComic)}-chuong-${prevChapter?.chapter_name}-${getIdFromUrl(prevChapter?.chapter_api_data, '/')}.html`}
-                            className="flex items-center gap-1 text-xs hover:text-primary active:text-primary"
-                        >
-                            <ChevronLeft className="size-4" />
-                            <span className="hidden sm:block">Chương</span>
-                            <span className="capitalize sm:normal-case">
-                                trước
-                            </span>
-                        </Link>
-                    ) : (
-                        <div className="flex items-center gap-1 text-xs opacity-50">
-                            <ChevronLeft className="size-4" />
-                            <span className="hidden sm:block">Chương</span>
-                            <span className="capitalize sm:normal-case">
-                                trước
-                            </span>
-                        </div>
-                    )}
-                    <h1 className="text-sm line-clamp-1 hidden md:block">
-                        <Link
-                            href={`/${CONFIG_SLUG.DETAIL}/${listDetailComic.slug}`}
-                            className="hover:text-primary"
-                        >
-                            {listDetailComic.name} {' - '}
-                        </Link>
-                        Chương {listDetailImageChapter.chapter_name}
-                    </h1>
-                    {nextChapter ? (
-                        <Link
-                            href={`/${CONFIG_SLUG.READING}/${slugComic}-chuong-${nextChapter?.chapter_name}-${getIdFromUrl(nextChapter?.chapter_api_data, '/')}.html`}
-                            className="flex items-center gap-1 text-xs hover:text-primary active:text-primary"
-                        >
-                            <span className="hidden sm:block">Chương</span>
-                            <span className="capitalize sm:normal-case">
-                                sau
-                            </span>
-                            <ChevronRight className="size-4" />
-                        </Link>
-                    ) : (
-                        <div className="flex items-center gap-1 text-xs opacity-50">
-                            <span className="hidden sm:block">Chương</span>
-                            <span className="capitalize sm:normal-case">
-                                sau
-                            </span>
-                            <ChevronRight className="size-4" />
-                        </div>
-                    )}
-                </div>
-            </Header>
+            <Header asChild/>
             <ListImageChapter
                 listImageChapter={listDetailImageChapter.chapter_image}
                 nextChapter={nextChapter}

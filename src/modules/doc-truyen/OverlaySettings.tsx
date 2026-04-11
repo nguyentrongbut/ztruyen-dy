@@ -57,6 +57,10 @@ import { TOtruyenChapter } from '@/types/api';
 import { buildReadingUrl } from '@/utils/buildReadingUrl ';
 import getIdFromUrl from '@/utils/getIdFromUrl';
 
+// ** Modules
+import Settings from '@/modules/doc-truyen/Settings';
+import { TBannerMode } from '@/modules/doc-truyen/ListImageChapter';
+
 type TOverlaySettings = {
     imgWidth?: number;
     setImgWidth: (imgWidth: number) => void;
@@ -71,6 +75,8 @@ type TOverlaySettings = {
     currentChapterId: string;
     isDropdownOpen: boolean;
     setIsDropdownOpen: Dispatch<SetStateAction<boolean>>;
+    bannerMode: TBannerMode | null;
+    onBannerModeChange: (mode: TBannerMode) => void;
 };
 
 const OverlaySettings = ({
@@ -87,6 +93,8 @@ const OverlaySettings = ({
     slugComic,
     nextChapter,
     prevChapter,
+    bannerMode,
+    onBannerModeChange,
 }: TOverlaySettings) => {
     // Hook
     const { isMd } = useTailwindBreakpoints();
@@ -193,7 +201,8 @@ const OverlaySettings = ({
     return (
         <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full absolute bottom-0 flex flex-col items-center left-1/2 -translate-x-1/2 transition-opacity duration-500 ease-in-out">
+            className="w-full absolute bottom-0 flex flex-col items-center left-1/2 -translate-x-1/2 transition-opacity duration-500 ease-in-out"
+        >
             <div className="bg-setting rounded-[40px] text-white/90 flex items-center justify-center px-5 max-w-max pt-1 gap-1.5">
                 {/* Comment */}
                 <Sheet>
@@ -229,17 +238,18 @@ const OverlaySettings = ({
                 </Sheet>
 
                 {/* Detail comic btn*/}
-                {!isMd && (
-                    <Link
-                        href={`/${CONFIG_SLUG.DETAIL}/${slugComic}`}
-                        className="flex flex-col items-center gap-1 p-2 cursor-pointer text-setting"
-                    >
-                        <BookOpenText className="size-5" />
-                        <span className="text-white text-xs">
+                <Link
+                    href={`/${CONFIG_SLUG.DETAIL}/${slugComic}.html`}
+                    className="flex flex-col items-center gap-1 p-2 cursor-pointer text-setting"
+                >
+                    <BookOpenText className="size-5"/>
+                    <span className="text-white text-xs">
                             Chi tiết truyện
                         </span>
-                    </Link>
-                )}
+                </Link>
+
+                {/* Settings */}
+                <Settings bannerMode={bannerMode} onBannerModeChange={onBannerModeChange}/>
 
                 {/* Menu */}
                 <DropdownMenu
