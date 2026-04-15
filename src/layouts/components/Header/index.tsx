@@ -20,6 +20,7 @@ import {
 
 // ** Lucide Icon
 import { Menu } from 'lucide-react';
+import CountdownButton from '@/components/common/CountdownButton';
 
 const Header = async ({ asChild = false }: { asChild?: boolean }) => {
     return (
@@ -64,9 +65,10 @@ const Header = async ({ asChild = false }: { asChild?: boolean }) => {
                     </div>
 
                     <div className="hidden xl:block">
-                        <Button sizeCustom="xs" disabled>
-                            Beta v1.1
-                        </Button>
+                        <CountdownButton/>
+                        {/*<Button sizeCustom="xs" disabled>*/}
+                        {/*    Beta v1.1*/}
+                        {/*</Button>*/}
                     </div>
                 </div>
             </nav>

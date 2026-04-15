@@ -12,7 +12,8 @@ import removeExtension from '@/utils/removeExtension';
 
 // ** Configs
 import { navHeader } from '@/configs/header';
-import Button from '@/components/common/Button';
+// import Button from '@/components/common/Button';
+import CountdownButton from '@/components/common/CountdownButton';
 
 const NavHeaderMobile = () => {
     const path = usePathname();
@@ -54,9 +55,10 @@ const NavHeaderMobile = () => {
                 );
             })}
 
-            <Button sizeCustom="xs" disabled className='mt-3'>
-                Beta v1.1
-            </Button>
+            <CountdownButton/>
+            {/*<Button sizeCustom="xs" disabled className='mt-3'>*/}
+            {/*    Beta v1.1*/}
+            {/*</Button>*/}
         </>
     );
 };
