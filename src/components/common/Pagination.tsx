@@ -115,6 +115,14 @@ export function Pagination({
         }
     };
 
+    const handleJumpBlur = () => {
+        const num = parseInt(jumpValue, 10);
+        if (!isNaN(num) && num >= 1 && num <= totalPageCount) {
+            goToPage(num);
+            setJumpValue('');
+        }
+    };
+
     const renderPageNumbers = () => {
         const items: ReactNode[] = [];
         const maxVisiblePages = 7;
@@ -269,13 +277,14 @@ export function Pagination({
             </ShadcnPagination>
 
             {/* Jump to page */}
-            <form onSubmit={handleJumpSubmit} className="flex items-center gap-2 text-sm whitespace-nowrap">
+            <form onSubmit={handleJumpSubmit} action="." className="flex items-center gap-2 text-sm whitespace-nowrap">
                 <span>Đến trang</span>
                 <Input
                     type="text"
                     inputMode="numeric"
                     value={jumpValue}
                     onChange={handleJumpChange}
+                    onBlur={handleJumpBlur}
                     placeholder={String(page)}
                     className="w-14 h-8 text-center px-1"
                 />

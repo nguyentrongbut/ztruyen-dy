@@ -170,6 +170,13 @@
 
 @layer utilities {
 
+    *:focus,
+    *:focus-visible {
+        outline: none !important;
+        box-shadow: none !important;
+        ring: 0 !important;
+    }
+
     /* scroll */
     .custom-scroll::-webkit-scrollbar {
         @apply w-1.5
