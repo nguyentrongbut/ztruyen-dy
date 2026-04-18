@@ -1,7 +1,7 @@
 'use client';
 
 // ** Next
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
 // ** React
 import { type ReactNode, useCallback, useState } from 'react';
@@ -15,18 +15,18 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from '@/components/ui/pagination';
+} from "@/components/ui/pagination";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
+    SelectValue
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 // ** Utils
 import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
 
 export interface PaginationProps {
     pageSizeSelectOptions?: {
@@ -40,12 +40,12 @@ export interface PaginationProps {
 }
 
 export function Pagination({
-    pageSizeSelectOptions,
-    pageSize,
-    totalCount,
-    page,
-    pageSearchParam,
-}: PaginationProps) {
+                               pageSizeSelectOptions,
+                               pageSize,
+                               totalCount,
+                               page,
+                               pageSearchParam,
+                           }: PaginationProps) {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -57,9 +57,7 @@ export function Pagination({
     const buildLink = useCallback(
         (newPage: number) => {
             const key = pageSearchParam || 'trang';
-            const newSearchParams = new URLSearchParams(
-                searchParams || undefined
-            );
+            const newSearchParams = new URLSearchParams(searchParams || undefined);
             newSearchParams.set(key, String(newPage));
             return `${pathname}?${newSearchParams.toString()}`;
         },
@@ -72,12 +70,9 @@ export function Pagination({
 
     const navToPageSize = useCallback(
         (newPageSize: number) => {
-            const key =
-                pageSizeSelectOptions?.pageSizeSearchParam || 'pageSize';
+            const key = pageSizeSelectOptions?.pageSizeSearchParam || 'pageSize';
 
-            const newSearchParams = new URLSearchParams(
-                searchParams || undefined
-            );
+            const newSearchParams = new URLSearchParams(searchParams || undefined);
             newSearchParams.delete('trang');
 
             if (pageSearchParam) {
@@ -94,6 +89,7 @@ export function Pagination({
     const handleJumpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const raw = e.target.value;
 
+        // Only allow digits
         if (raw !== '' && !/^\d+$/.test(raw)) return;
 
         if (raw === '') {
@@ -110,13 +106,12 @@ export function Pagination({
         setJumpValue(String(num));
     };
 
-    const handleJumpKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            const num = parseInt(jumpValue, 10);
-            if (!isNaN(num) && num >= 1 && num <= totalPageCount) {
-                goToPage(num);
-                setJumpValue('');
-            }
+    const handleJumpSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const num = parseInt(jumpValue, 10);
+        if (!isNaN(num) && num >= 1 && num <= totalPageCount) {
+            goToPage(num);
+            setJumpValue('');
         }
     };
 
@@ -253,11 +248,7 @@ export function Pagination({
                                 if (page > 1) goToPage(page - 1);
                             }}
                             aria-disabled={page === 1}
-                            className={
-                                page === 1
-                                    ? 'pointer-events-none opacity-50'
-                                    : ''
-                            }
+                            className={page === 1 ? 'pointer-events-none opacity-50' : ''}
                         />
                     </PaginationItem>
 
@@ -271,41 +262,36 @@ export function Pagination({
                                 if (page < totalPageCount) goToPage(page + 1);
                             }}
                             aria-disabled={page === totalPageCount}
-                            className={
-                                page === totalPageCount
-                                    ? 'pointer-events-none opacity-50'
-                                    : ''
-                            }
+                            className={page === totalPageCount ? 'pointer-events-none opacity-50' : ''}
                         />
                     </PaginationItem>
                 </PaginationContent>
             </ShadcnPagination>
 
             {/* Jump to page */}
-            <div className="flex items-center gap-2 text-sm whitespace-nowrap">
+            <form onSubmit={handleJumpSubmit} className="flex items-center gap-2 text-sm whitespace-nowrap">
                 <span>Đến trang</span>
                 <Input
                     type="text"
                     inputMode="numeric"
                     value={jumpValue}
                     onChange={handleJumpChange}
-                    onKeyDown={handleJumpKeyDown}
                     placeholder={String(page)}
-                    className="w-14 h-8 text-center px-1 text-xs"
+                    className="w-14 h-8 text-center px-1"
                 />
-                <span className="text-muted-foreground">
-                    / {totalPageCount}
-                </span>
-            </div>
+                <span className="text-muted-foreground">/ {totalPageCount}</span>
+                {/* Hidden submit — triggers "Go/Done" on iOS/Android virtual keyboard */}
+                <button type="submit" className="sr-only" aria-hidden="true" />
+            </form>
         </div>
     );
 }
 
 function SelectRowsPerPage({
-    options,
-    setPageSize,
-    pageSize,
-}: {
+                               options,
+                               setPageSize,
+                               pageSize,
+                           }: {
     options: number[];
     setPageSize: (newSize: number) => void;
     pageSize: number;
