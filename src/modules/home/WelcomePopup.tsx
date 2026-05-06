@@ -12,35 +12,36 @@ import { X } from 'lucide-react';
 // ** Component
 import Button from '@/components/common/Button';
 
-const STORAGE_KEY = 'ZTC-popup-v2';
+const STORAGE_KEY = 'ZTC-goodbye-popup-v1';
 
-const WelcomePopup = () => {
-    const [open, setOpen] = useState(false);
+const GoodbyePopup = () => {
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
-        localStorage.removeItem('ZTC-popup-count');
+        const popupClosed = localStorage.getItem(STORAGE_KEY);
 
-        const hasShown = localStorage.getItem(STORAGE_KEY);
-        if (!hasShown) setOpen(true);
+        if (!popupClosed) {
+            setIsOpen(true);
+        }
     }, []);
 
-    const handleClose = () => {
-        localStorage.setItem(STORAGE_KEY, '1');
-        setOpen(false);
+    const handleClosePopup = () => {
+        localStorage.setItem(STORAGE_KEY, 'true');
+        setIsOpen(false);
     };
 
-    if (!open) return null;
+    if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-            <div className="bg-background rounded-2xl p-6 max-w-md w-full mx-4 relative shadow-xl">
-                <div className="overflow-y-auto custom-scroll max-h-[90dvh] -mr-2 sm:mr-0">
+            <div className="bg-background relative mx-4 w-full max-w-md rounded-2xl p-6 shadow-2xl">
+                <div className="custom-scroll max-h-[90dvh] overflow-y-auto -mr-2 pr-2">
                     {/* Close button */}
                     <Button
-                        onClick={handleClose}
-                        className="absolute top-4 right-4 size-8 rounded-full hover:bg-primary hover:text-white transition-colors dark:hover:bg-primary dark:hover:text-white"
+                        onClick={handleClosePopup}
+                        className="absolute top-4 right-4 size-8 rounded-full transition-colors hover:bg-primary hover:text-white"
                         variant="ghost"
                     >
                         <X className="size-4" />
@@ -48,50 +49,63 @@ const WelcomePopup = () => {
 
                     {/* Header */}
                     <div className="section-header justify-center">
-                        <h2 className="heading text-primary">Thông báo!</h2>
+                        <h2 className="heading text-primary">
+                            Tạm biệt 👋
+                        </h2>
                     </div>
 
                     {/* Content */}
-                    <div className="text-sm space-y-3">
+                    <div className="space-y-4 text-sm leading-relaxed">
                         <p>
-                            Chào các đọc giả yêu truyện của{' '}
-                            <span className="font-semibold text-primary">Ztruyện</span>{' '}
-                            nè! ヾ(≧▽≦*)o
+                            Chào tạm biệt hơn{' '}
+                            <span className="font-semibold text-primary">
+                                300.000 người dùng
+                            </span>{' '}
+                            đã từng ghé qua{' '}
+                            <span className="font-semibold text-primary">
+                                ZTruyện
+                            </span>{' '}
+                            ❤️
                         </p>
 
                         <p>
-                            Tin vui! <span className="font-semibold">ZTruyện</span> giờ đã có{' '}
-                            <span className="font-semibold text-primary">bản PWA</span> — bạn có thể cài
-                            thẳng lên màn hình chính, đọc truyện nhanh hơn mà không cần mở trình duyệt!
+                            Sau một khoảng thời gian hoạt động, mình xin thông
+                            báo rằng{' '}
+                            <span className="font-semibold text-primary">
+                                website sẽ chính thức đóng vào tuần sau
+                            </span>.
                         </p>
 
-                        <ul className="bg-primary/5 rounded-xl p-3 space-y-2">
-                            <li className="flex items-center gap-2">
-                                📱 Cài như app thật — không qua App Store
-                            </li>
-                            <li className="flex items-center gap-2">
-                                ⚡ Mở nhanh, giao diện toàn màn hình
-                            </li>
-                        </ul>
-
-                        <p className="text-center leading-relaxed">
-                            Xem hướng dẫn cài đặt chi tiết tại bài post bên dưới nhé!
+                        <p>
+                            Cảm ơn mọi người đã luôn đồng hành, đọc truyện,
+                            góp ý và ủng hộ ZTruyện trong suốt thời gian qua.
+                            Đây thật sự là một hành trình rất đáng nhớ ✨
                         </p>
 
-                        <Link
-                            href="https://www.facebook.com/share/p/1NTunHTvEx/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 font-medium py-2.5 px-4 rounded-xl transition-colors"
-                            onClick={handleClose}
-                        >
-                            👉 Xem hướng dẫn cài PWA
-                        </Link>
+                        <div className="space-y-3 rounded-xl bg-primary/5 p-4">
+                            <p>
+                                Từ một dự án nhỏ cá nhân đến khi có hàng trăm
+                                nghìn người sử dụng, mình thật sự rất biết ơn
+                                vì điều đó 🥹
+                            </p>
 
-                        <p className="text-center text-gray-400 italic text-xs">
-                            Cảm ơn bạn đã đồng hành cùng{' '}
-                            <span className="not-italic font-medium text-gray-500">ztruyen.io.vn</span>{' '}
-                            ~ Sắp có update ngon rồi! ❤️
+                            <p>
+                                Và trước khi khép lại, mình sẽ ra một video đơn giản
+                                hướng dẫn chi tiết cách tạo một website giống{' '}
+                                <span className="font-semibold text-primary">
+                                    ZTruyện
+                                </span>{' '}
+                                để mọi người có thể tự build web riêng cho mình
+                                🚀
+                            </p>
+                        </div>
+
+                        <p className="text-center text-xs italic text-gray-400">
+                            Cảm ơn vì đã từng là một phần của{' '}
+                            <span className="not-italic font-medium text-gray-500">
+                                ztruyen.io.vn
+                            </span>{' '}
+                            ❤️
                         </p>
                     </div>
                 </div>
@@ -100,4 +114,4 @@ const WelcomePopup = () => {
     );
 };
 
-export default WelcomePopup;
+export default GoodbyePopup;
